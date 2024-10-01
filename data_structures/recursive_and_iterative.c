@@ -408,3 +408,34 @@ int linear_search(int list[], int searchnum, int left, int right) {
 	return -1;
 
 }
+//linear search recursive
+
+#include <stdio.h>
+
+int linear_search(int list[], int searchnum, int left, int right);
+
+int main()
+{
+	int list[5] = { 1,2,3,4,5 };
+	printf("please enter a number to search\n");
+	int a;
+	scanf_s("%d", &a);
+	int sonuç = linear_search(list,a,0,4);
+	printf("%d", sonuç);
+
+	return 0;
+}
+int linear_search(int list[], int searchnum, int left, int right) {
+	if (right<=left)
+	{
+		return -1;
+	}
+	else
+	{
+		if (list[right]==searchnum)
+		{
+			return right;
+		}
+		return linear_search(list, searchnum, left, right - 1);
+	}
+}
