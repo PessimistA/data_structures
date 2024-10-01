@@ -381,3 +381,30 @@ int compare(int a, int b) {
 		return -1;
 	}
 }
+
+//linear search
+#include <stdio.h>
+
+int linear_search(int list[], int searchnum, int left, int right);
+
+int main()
+{
+	int list[5] = { 1,2,3,4,5 };
+	printf("please enter a number to search\n");
+	int a;
+	scanf_s("%d", &a);
+	int sonuç = linear_search(list,a,0,4);
+	printf("%d", sonuç);
+
+	return 0;
+}
+int linear_search(int list[], int searchnum, int left, int right) {
+	for (int i = 0; i < right; i++)
+	{
+		if(list[i] == searchnum) {
+			return i;
+		}
+	}
+	return -1;
+
+}
