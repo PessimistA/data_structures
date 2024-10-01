@@ -439,3 +439,35 @@ int linear_search(int list[], int searchnum, int left, int right) {
 		return linear_search(list, searchnum, left, right - 1);
 	}
 }
+//insertion sort
+
+#include <stdio.h>
+
+void insertion_sort(int list[], int right);
+
+int main()
+{
+	int list[5] = { 13,22,34,24,556 };
+
+	insertion_sort(list,5);
+
+	return 0;
+}
+void insertion_sort(int list[], int right) {
+	for (int i = 1; i < right; i++)
+	{
+		for ( j=i-1 ; j > 0; j--)
+		{
+			if (list[j-1]>list[j])
+			{
+				int temp = list[j - 1];
+				list[j-1] = list[j];
+				list[j] = temp;
+			}
+		}
+	}
+	for (int i = 0; i < right; i++)
+	{
+		printf("%d\n", list[i]);
+	}
+}
