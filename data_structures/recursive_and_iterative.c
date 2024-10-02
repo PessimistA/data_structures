@@ -471,3 +471,48 @@ void insertion_sort(int list[], int right) {
 		printf("%d\n", list[i]);
 	}
 }
+
+#include <stdio.h>
+void iterative_factorial(int number);
+
+int recursive_factorial(int number);
+
+int main() {
+	int number;
+
+	printf("pleasse enter  a number \n");
+	scanf_s("%d", &number);
+	iterative_factorial(number);
+	printf("bundan sonrası recursive\n");
+	for (int i = 0; i <= number; i++)
+	{
+		printf("%d. adım == %d\n",i,recursive_factorial(i));
+	}
+
+	return 0;
+}
+void iterative_factorial(int number) {
+	int start = 1;
+	int list[100];
+	for (int i = 1; i <= number; i++)
+	{
+		list[i] = i;
+	}
+	for (int i = 1; i <= number; i++)
+	{
+		start = start * i;
+		printf("%d. adım => %d \n", i, start);
+
+	}
+}
+
+int recursive_factorial(int number) {
+	if (number <=0)
+	{
+		return 1;
+	}
+	else
+	{
+		return number * recursive_factorial(number - 1);
+	}
+}
