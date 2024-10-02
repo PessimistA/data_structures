@@ -594,3 +594,32 @@ int recursive_fibonacci(int number) {
 		return recursive_fibonacci(number-1)+recursive_fibonacci(number-2);
 	}
 }
+
+//sorting
+#include <stdio.h>
+
+void sorting(int list[],int first,int sayaç,int last);
+
+int main() {
+	int list[] = { 19,2,23,111,22 };
+	sorting(list,0,1,4);
+    printf("en büyük eleman %d ", list[4]);
+	return 0;
+}
+void sorting(int list[], int first, int sayaç, int last) {
+    if (first >= last) {
+        return;  // Sıralama tamam
+    }
+
+    if (sayaç <= last) {
+        if (list[first] > list[sayaç]) {
+            int temp = list[first];
+            list[first] = list[sayaç];
+            list[sayaç] = temp;
+        }
+        sorting(list, first, sayaç + 1, last);  // Bir sonraki elemana geç
+    }
+    else {
+        sorting(list, first + 1, first + 2, last);  // Bir sonraki adım için baştan başla
+    }
+}
