@@ -472,6 +472,7 @@ void insertion_sort(int list[], int right) {
 	}
 }
 
+//factorial
 #include <stdio.h>
 void iterative_factorial(int number);
 
@@ -514,5 +515,57 @@ int recursive_factorial(int number) {
 	else
 	{
 		return number * recursive_factorial(number - 1);
+	}
+}
+
+//fibonacci
+#include <stdio.h>
+void iterative_fibonacci(int number);
+
+int recursive_fibonacci(int number);
+
+int main() {
+	int number;
+
+	printf("pleasse enter  a number \n");
+	scanf_s("%d", &number);
+	iterative_fibonacci(number);
+	printf("bundan sonrası recursive\n");
+	for (int i = 0; i <= number; i++)
+	{
+		printf("%d. adım == %d\n",i,recursive_fibonacci(i));
+	}
+
+	return 0;
+}
+void iterative_fibonacci(int number) {
+	int temp = 0, a = 0, b = 1;
+	if (number>=0)
+	{
+		printf("%d\n", a);
+	}
+	if (number >= 1)
+	{
+		printf("%d\n", b);
+
+	}
+	for (int i = 0; i <= number ; i++)
+	{
+		temp = a + b;
+		a = b;
+		b = temp;
+		printf("%d\n", temp);
+
+	}
+}
+
+int recursive_fibonacci(int number) {
+	if (number <=0)
+	{
+		return 1;
+	}
+	else
+	{
+		return recursive_fibonacci(number-1)+recursive_fibonacci(number-2);
 	}
 }
