@@ -444,19 +444,23 @@ int linear_search(int list[], int searchnum, int left, int right) {
 #include <stdio.h>
 
 void insertion_sort(int list[], int right);
-
+void recursive(int list[], int left, int right);
 int main()
 {
-	int list[5] = { 13,22,34,24,556 };
+	int list[5] = { 13,89,34,24,556 };
 
 	insertion_sort(list,5);
-
-	return 0;
+	recursive(list, 1, 4);
+	for (int i = 0; i < 5; i++)
+	{
+		printf("%d\n", list[i]);
+	}
+	return 1;
 }
 void insertion_sort(int list[], int right) {
 	for (int i = 1; i < right; i++)
 	{
-		for ( j=i-1 ; j > 0; j--)
+		for (int  j=i-1 ; j > 0; j--)
 		{
 			if (list[j-1]>list[j])
 			{
@@ -470,6 +474,23 @@ void insertion_sort(int list[], int right) {
 	{
 		printf("%d\n", list[i]);
 	}
+}
+
+void recursive(int list[], int left, int right) {
+	if (left > right ) {
+		return;
+	}
+		if (left>0 && list[left - 1] < list[left])
+		{
+			int temp = list[left - 1];
+			list[left - 1] = list[left];
+			list[left] = temp;
+			recursive(list, left -1, right);
+		}
+		else
+		{
+			recursive(list, left + 1, right);
+		}
 }
 
 //factorial
