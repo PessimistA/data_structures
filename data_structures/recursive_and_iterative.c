@@ -549,7 +549,7 @@ void iterative_fibonacci(int number) {
 		printf("%d\n", b);
 
 	}
-	for (int i = 0; i <= number ; i++)
+	for (int i = 2; i <= number ; i++)
 	{
 		temp = a + b;
 		a = b;
@@ -560,7 +560,11 @@ void iterative_fibonacci(int number) {
 }
 
 int recursive_fibonacci(int number) {
-	if (number <=0)
+	if (number ==0)
+	{
+		return 0;
+	}
+	if (number == 1)
 	{
 		return 1;
 	}
