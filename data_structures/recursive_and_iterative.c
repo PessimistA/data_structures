@@ -650,3 +650,33 @@ void adding(int list[], int first,  int last,int* max) {
 		adding(list, first + 1, last, max);
 	}
 }
+//üs alma
+#include <stdio.h>
+
+void adding(int,int,int *);
+
+int main() {
+	printf("please enter the number");
+	int number;
+	scanf_s("%d", &number);
+	int exponen;
+	printf("please enter the exponen");
+	scanf_s("%d", &exponen);
+	int a = 1;
+	int* result = &a;
+	adding(number, exponen, &a);
+	printf("%d", a);
+
+	return 0;
+}
+void adding(int number ,int exponen,int *result) {
+	if (exponen==0)
+	{
+		return;
+	}
+	else
+	{
+		*result = number * *result;
+		adding(number, exponen - 1, result);
+	}
+}
