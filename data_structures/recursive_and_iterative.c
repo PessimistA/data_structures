@@ -703,3 +703,34 @@ void permutasion(char dizi[], int lenght) {
 		}
 	}
 }
+
+//permutasion
+
+#include <stdio.h>
+
+void permutasion(char dizi[],int);
+
+int main() {
+    char dizi[] = { 'a','b','c','d'};
+    permutasion(dizi, 4);
+
+	return 0;
+}
+void permutasion(char dizi[], int lenght) {
+    for (int i = 0; i < lenght; i++) {
+        for (int j = 0; j < lenght; j++) {
+            if (i == j) {
+                continue;
+            }
+
+            for (int k = 0; k < lenght; k++) {
+                if (k == i || k == j) 
+                {
+                    continue;
+                }
+
+                printf("%c%c%c\n", dizi[i], dizi[j], dizi[k]);
+            }
+        }
+    }
+}
