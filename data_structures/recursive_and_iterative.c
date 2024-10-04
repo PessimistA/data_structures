@@ -734,3 +734,45 @@ void permutasion(char dizi[], int lenght) {
         }
     }
 }
+
+//binary çevirici
+#include <stdio.h>
+#include <math.h>
+
+void binary_reverse(int dizi[],int,int,int);
+
+int main() {
+    printf("bir sayı giriniz");
+    int sayı;   
+    int basamak1;
+    scanf_s("%d", &sayı);
+    double basamak = log2(sayı);
+    if (double(basamak)==int(basamak))
+    {
+        basamak1 = basamak;
+    }
+    else
+    {
+        basamak1 = int(basamak) + 1;
+    }
+    int liste[20];
+    binary_reverse(liste,basamak1,0,sayı);
+    for (int i = basamak1; i >0; i--)
+    {
+        printf("%d",liste[i]);
+    }
+
+	return 0;
+}
+void binary_reverse(int dizi[], int basamak,int başlangıç,int number) {
+    if (başlangıç > basamak)
+    {
+        return;
+    }
+    else
+    {
+        dizi[başlangıç] = number % 2;
+        number = number / 2;
+        binary_reverse(dizi, basamak, başlangıç + 1, number);
+    }
+}
