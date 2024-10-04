@@ -680,3 +680,26 @@ void adding(int number ,int exponen,int *result) {
 		adding(number, exponen - 1, result);
 	}
 }
+//aynı sayıların kullanıldığı permütasyon
+#include <stdio.h>
+
+void permutasion(char dizi[],int);
+
+int main() {
+	char dizi[] = { 'a','b','c' };
+	permutasion(dizi, 3);
+
+	return 0;
+}
+void permutasion(char dizi[], int lenght) {
+	for (int i = 0; i < lenght; i++)
+	{
+		for (int j = 0; j <lenght;j++) {
+			for (int k = 0; k < lenght; k++)
+			{
+				printf("%c%c%c", dizi[i],dizi[j],dizi[k]);
+				printf("\n");
+			}
+		}
+	}
+}
