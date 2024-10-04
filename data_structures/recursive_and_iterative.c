@@ -623,3 +623,30 @@ void sorting(int list[], int first, int sayaç, int last) {
         sorting(list, first + 1, first + 2, last);  // Bir sonraki adım için baştan başla
     }
 }
+
+//toplama
+
+#include <stdio.h>
+
+void adding(int list[],int first,int last,int* max );
+
+int main() {
+	int list[] = { 19,2,23,111,22 };
+	int a = 0;
+	int *max= &a;
+
+	adding(list,0,4,&a);
+	printf("%d", a);
+	return 0;
+}
+void adding(int list[], int first,  int last,int* max) {
+	if (first > last) {
+		return;
+	}
+	else
+	{
+		int temp = list[first] + *max;
+		*max = temp;
+		adding(list, first + 1, last, max);
+	}
+}
