@@ -331,6 +331,41 @@ int compare(int a, int b) {
 		return -1;
 	}
 }
+//ver2
+#include <stdio.h>
+#include <math.h>
+
+void binary_search(int dizi[],int,int*);
+
+int main() {
+    printf("bir sayı giriniz");
+    int sayı,a=0;
+    int* ptr ;
+    ptr = &a;
+    scanf_s("%d", &sayı);
+    int dizi[] = {1,2,3,4,5,6,7,8,9,10};
+    binary_search(dizi, sayı,ptr);
+    printf("%d", a);
+	return 0;
+}
+void binary_search(int dizi[], int istenilen,int * ptr) {
+    int sol = 0, sağ = 9,middle=0;
+    while (sol <= sağ) {
+        middle = sol + ((sağ - sol) / 2);
+        if (istenilen > dizi[middle])
+        {
+            sol = middle + 1;
+        }
+        else if (istenilen < dizi[middle]) {
+            sağ = middle - 1;
+        }
+        else
+        {
+            *ptr = middle;
+            break;
+        }
+    }
+}
 
 //recursive olarak binary search
 
