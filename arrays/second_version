@@ -1,0 +1,114 @@
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void oned_array(int** a, int k);
+void twod_array(int*** b, int k);
+void threed_array(int**** c, int k);
+
+int main() {
+	printf("please enter a size");
+	int k;
+	scanf_s("%d", &k);
+	
+	//int* a;
+	//oned_array(&a, k);
+	//free(a);
+
+	//int** b;
+	//twod_array(&b, k);
+	//for (int i = 0; i < k; i++)
+	//{
+	//	free(b[i]);
+	//}
+	//free(b);
+	
+	//int*** c;
+	//threed_array(&c, k);
+	//for (int i = 0; i < k; i++)
+	//{
+	//	for (int j = 0; j < k; j++)
+	//	{
+	//		free(c[i][j]);
+	//	}
+	//	free(c[i]);
+	//}
+	//free(c);
+
+
+	return 0;
+
+}
+void oned_array(int** a, int k) {
+	*a = (int*)malloc(k * (sizeof(int)));
+	for (int i = 0; i < k; i++)
+	{
+		printf("please enter a number");
+		scanf_s("%d", &(*a)[i]);
+
+	}
+	for (int i = 0; i < k; i++)
+	{
+		printf("%d", (*a)[i]);
+
+	}
+}
+void twod_array(int*** b, int k) {
+	(*b) = (int**)malloc(k * (sizeof(int*)));
+	for (int i = 0; i < k; i++)
+	{
+		(*b)[i] = (int*)malloc(k * (sizeof(int)));
+	}
+	for (int i = 0; i < k; i++)
+	{
+		for (int j = 0; j < k; j++)
+		{
+			printf("please enter a number");
+			scanf_s("%d", &(*b)[i][j]);
+
+		}
+	}
+	for (int i = 0; i < k; i++)
+	{
+		for (int j = 0; j < k; j++)
+		{
+
+			printf("%d", (*b)[i][j]);
+
+		}
+	}
+}
+void threed_array(int**** c, int k) {
+	(*c) = (int***)malloc(k * (sizeof(int**)));
+	for (int i = 0; i < k; i++)
+	{
+		(*c)[i] = (int**)malloc(k * (sizeof(int*)));
+		for (int j = 0; j < k; j++)
+		{
+			(*c)[i][j] = (int*)malloc(k * (sizeof(int)));
+		}
+	}
+
+	for (int i = 0; i < k; i++)
+	{
+		for (int j = 0; j < k; j++)
+		{
+			for (int z = 0; z < k; z++)
+			{
+				printf("please enter a number");
+				scanf_s("%d", &(*c)[i][j][z]);
+			}
+		}
+	}
+	for (int i = 0; i < k; i++)
+	{
+		for (int j = 0; j < k; j++)
+		{
+			for (int z = 0; z < k; z++)
+			{
+				printf("%d", (*c)[i][j][z]);
+			}
+		}
+	}
+}
