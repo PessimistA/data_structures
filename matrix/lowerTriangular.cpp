@@ -17,7 +17,7 @@ int main() {
 	else if (i == 1)
 		printf("\n access to the upper triangular\n");
 	else
-		printf("“\n the position in ‘alt’ matrix : % d value : % d \n“", i, alt[i]);
+		printf("â€œ\n the position in â€˜altâ€™ matrix : % d value : % d \nâ€œ", i, alt[i]);
 
 	return 0;
 }
@@ -39,7 +39,7 @@ int readtriangularmatrix(int alt[], int n)
 }
 int gettriangularmatrix(int i, int j, int n) {
 	if (i < 0 || i >= n || j < 0 || j >= n) {
-		printf("“\n invalid index\n“");
+		printf("â€œ\n invalid index\nâ€œ");
 		return 2;
 	}
 	else if (i >= j) //valid index
