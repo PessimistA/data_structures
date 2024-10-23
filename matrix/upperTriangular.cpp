@@ -66,3 +66,99 @@ int gettriangularmatrix(int i, int j, int n) {
     // Üst üçgenin geçerli bir indeksinin tek boyutlu dizideki yeri
     return (i * n - (i * (i + 1)) / 2) + (j);
 }
+
+//version 2
+#include <stdio.h>
+#include <stdlib.h>
+
+int** arrays;
+int* onedarray;
+
+void sizing(int n) {
+	arrays = (int**)malloc(n * sizeof(int*));
+	for (int i = 0; i < n; i++)
+	{
+		arrays[i] = (int*)malloc(n * sizeof(int));
+	}
+}
+void sizing2(int n) {
+	onedarray = (int*)malloc(n*(n+1)/2 * sizeof(int));
+}
+void print(int n) {
+	printf("normal version\n");
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			printf("%d ", arrays[i][j]);  
+		}
+		printf("\n");
+	}
+	printf("\none d array version\n");
+	for (int i = 0; i < n*(n+1)/2; i++)
+	{
+		printf("%d sirada = %d\n", i, onedarray[i]);
+	}
+}
+int find_index(int i, int j, int n) {
+	if (i >= j)
+	{
+		return n*i-((i * (i + 1)) / 2) + j;
+	}
+	else
+	{
+		return -1;
+	}
+}
+void readingoftriangular(int n) {
+	sizing(n);
+	sizing2(n);
+	int counter = 1;
+	int index = 0;
+	for (int i = 0; i < n; i++) {//hepsine sıfır ataması yapar
+		for (int j = 0; j < n; j++) {
+			arrays[i][j] = 0; 
+		}
+	}
+
+	for (int i = 0; i < n; i++) {//2 boyutlu diziye atanma yapar 
+		for (int j = i; j <n; j++) {//bir i>j olmalı bu yüzden j den başlar
+			arrays[i][j] = counter;  
+			counter++;
+		}
+	}
+	for (int i = 0; i < n; i++) {
+		for (int j = i; j < n; j++) {
+			int index = n*i-(i * (i + 1)) / 2 + j;//upper formulü işler
+			onedarray[index] = arrays[i][j];
+		}
+	}
+
+	print(n);  
+	printf("lutfen bulunmasini istediğiniz i ve j numaralarini giriniz\n");
+	int k, f;
+	scanf_s("%d", &k);
+	scanf_s("%d", &f);
+	int index1 =find_index(k, f, n);
+	if (index1==-1)
+	{
+		printf("problem");
+	}
+	else
+	{
+		printf("aradiginiz sayi arrays[%d][%d]= onedarray[%d]= %d", k, f, index1, onedarray[index1]);
+	}
+}
+
+
+int main() {
+	printf("lutfen bir size giriniz");
+	int n;
+	scanf_s("%d", &n);
+	readingoftriangular(n);
+	for (int i = 0; i < n; i++)
+	{
+		free(arrays[i]);
+	}
+	free(arrays);
+	free(onedarray);
+	return 0;
+}
