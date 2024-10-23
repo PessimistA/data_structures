@@ -58,6 +58,15 @@ void readtriangularmatrix(int alt[], int n);
 
 int a[3][3] = { { 1, 0, 0 }, { 2,3,0 }, { 4,5,6 } };
 
+void print() {
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++) {
+            printf("%d\t", a[i][j]);
+        }
+        printf("\n");
+    }
+}
 
 int main() {
     int alt[101];
@@ -72,7 +81,7 @@ int main() {
 
 
     int row , col  ;
-    printf("lütfen sırayla i ve j değerlerini giriniz");
+    printf("lutfen sirayla i ve j degerlerini giriniz");
     scanf_s("%d", &row);
     scanf_s("%d", &col);
     
@@ -80,18 +89,25 @@ int main() {
 
 
     if (index == -1) {
-        printf("\n Geçersiz indeks.\n");
+        printf("\n Gecersiz indeks.\n");
     }
     else if (index == -2) {
-        printf("\n Üçgen dışında (alt üçgen).\n");
+        printf("\n Ucgen dişinda (alt ucgen).\n");
     }
     else {
+        printf("istenilen indexteki arkadas\n");
         printf("\n Alt dizideki pozisyon: %d, deger: %d\n", index, alt[index]);
     }
+    printf("\n");
+    printf("tek boyutlu olan dizi\n");
     for (int i = 0; i < n*(n+1)/2; i++)
     {
         printf("\n Alt dizideki pozisyon: %d, deger: %d\n", i, alt[i]);
     }
+    printf("\n");
+    printf("3 boyutlu hali\n");
+    print();
+    
 
     return 0;
 }
@@ -99,13 +115,12 @@ int main() {
 void readtriangularmatrix(int alt[], int n) {
     int i, j, index;
 
-    // Dizinin boyutu üst üçgen elemanlarını alabilecek mi kontrol et
     if (n * (n + 1) / 2 > 101) {
-        printf("\n Geçersiz dizi boyutu\n");
+        printf("\n Gecersiz dizi boyutu\n");
         return;
     }
 
-    // Matrisin üst üçgen kısmını oku
+
     for (i = 0; i <= n - 1; i++) {
         for (j = 0; j <= i; j++) {
             if (a[i][j] != 0)
@@ -128,6 +143,6 @@ int gettriangularmatrix(int i, int j, int n) {
         return -2;
     }
 
-    // Üst üçgenin geçerli bir indeksinin tek boyutlu dizideki yeri
+    // alt üçgenin geçerli bir indeksinin tek boyutlu dizideki yeri
     return ((i * (i + 1)) / 2) + (j);
 }
