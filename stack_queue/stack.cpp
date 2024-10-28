@@ -42,3 +42,38 @@ int main() {
 	print();
 	return 0;
 }
+
+//ver2
+#include <stdio.h>
+#include <stdlib.h>
+
+int* dizi;
+int index=0;
+void pop() {
+	index--;
+}
+void push(int item) {
+	dizi[index] = item;
+	index++;
+}
+void print() {
+	printf("stack:");
+	for (int i = 0; i < index; i++)
+	{
+		printf("%d\t", dizi[i]);
+	}
+	printf("\n");
+}
+
+int main() {
+	int n;
+	printf("lütfen istediğiniz n değerini giriniz");
+	scanf_s("%d", &n);
+	dizi = (int*)malloc(n * sizeof(int));
+	push(4);
+	push(5);
+	print();
+	pop();
+	print();
+	return 0;
+}
