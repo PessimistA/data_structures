@@ -45,3 +45,39 @@ int main() {
 	print();
 	return 0;
 }
+
+//ver2
+#include <stdio.h>
+#include <stdlib.h>
+
+int* dizi;
+int index=0;
+int firstone = 0;
+void dequeue() {
+	firstone++;
+}
+void enqueque(int item) {
+	dizi[index] = item;
+	index++;
+}
+void print() {
+	printf("queque:");
+	for (int i = firstone; i < index; i++)
+	{
+		printf("%d\t", dizi[i]);
+	}
+	printf("\n");
+}
+
+int main() {
+	int n;
+	printf("lütfen istediğiniz n değerini giriniz");
+	scanf_s("%d", &n);
+	dizi = (int*)malloc(n * sizeof(int));
+	enqueque(4);
+	enqueque(5);
+	print();
+	dequeue();
+	print();
+	return 0;
+}
