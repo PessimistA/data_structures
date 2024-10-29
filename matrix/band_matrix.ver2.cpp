@@ -185,7 +185,7 @@ int** arrays;
 void arraymaker(int n,int a,int b) {
 	int sayaç = 1;
 	int band_size = (n * (a + b + 1)) - (a * (a + 1) / 2) - (b * (b + 1) / 2);//+1 li formül çünkü a ve b 1 azalmış durumda
-	int search_size = a + b + 1;
+	int search_size = a + b + 1;//a+b-1 a ve b birer eksik olduğundan +2 eklenir ve +1 olur
 	arrays = (int**)malloc(n * sizeof(int*));
 	for (int i = 0; i < n; i++)
 	{
