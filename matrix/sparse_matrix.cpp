@@ -46,7 +46,7 @@ struct eleman
 	int row;
 	int col;
 	int value;
-}element;
+};
 
 void arraymaker(int n) {
 	int item;
@@ -124,12 +124,13 @@ int found_lower(int i,int j,int n, eleman element[]) {
 }
 
 int main() {
-	eleman element[100];
+	struct eleman* element;
 	printf("bir n degeri giriniz");
 	int n;
 	scanf_s("%d", &n);
 	itemcount = n / 4;
 	arraymaker(n);
+	element = (struct eleman*)malloc(n * n / 4 * sizeof(struct eleman));
 	append_for_lower(n, element);
 	print(n, element);
 	int i, j;
