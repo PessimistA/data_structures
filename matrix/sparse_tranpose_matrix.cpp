@@ -103,7 +103,7 @@ void arraymaker(int n) {
 
 	for (int i = 0; i < n; i++)
 	{
-		for (int j = 0; j <n; j++) {
+		for (int j = 0; j < n; j++) {
 			dizi_lower[i][j] = 0;
 			dizi_transpoze[i][j] = 0;
 		}
@@ -112,8 +112,8 @@ void arraymaker(int n) {
 	while (itemler > 0) {
 		k = rand() % (n);
 		l = rand() % (n);
-		item = (rand() % 9 )+1;
-		if (dizi_lower[k][l]==0)
+		item = (rand() % 9) + 1;
+		if (dizi_lower[k][l] == 0)
 		{
 			dizi_lower[k][l] = item;
 			dizi_transpoze[l][k] = item;
@@ -125,10 +125,10 @@ void arraymaker(int n) {
 		}
 	}
 }
-void append_for_lower(int n,eleman element[],eleman transpoze[]) {
+void append_for_lower(int n, eleman element[], eleman transpoze[]) {
 	element[0].col = n;
 	element[0].row = n;
-	element[0].value = n*n/4;
+	element[0].value = n * n / 4;
 	transpoze[0].col = n;
 	transpoze[0].row = n;
 	transpoze[0].value = n * n / 4;
@@ -138,7 +138,7 @@ void append_for_lower(int n,eleman element[],eleman transpoze[]) {
 	{
 		for (int j = 0; j < n; j++)
 		{
-			if (dizi_lower[i][j]!=0)
+			if (dizi_lower[i][j] != 0)
 			{
 				element[sayaç].col = j;
 				element[sayaç].row = i;
@@ -147,13 +147,14 @@ void append_for_lower(int n,eleman element[],eleman transpoze[]) {
 			}
 			if (dizi_transpoze[i][j] != 0)
 			{
-				element[sayaç2].col = j;
-				element[sayaç2].row = i;
-				element[sayaç2].value = dizi_transpoze[i][j];
+				transpoze[sayaç2].col = j;
+				transpoze[sayaç2].row = i;
+				transpoze[sayaç2].value = dizi_transpoze[i][j];
 				sayaç2++;
 			}
 		}
 	}
+
 }
 void print(int n, eleman element[], eleman transpoze[]) {
 	printf("ilk hali\n");
@@ -163,9 +164,9 @@ void print(int n, eleman element[], eleman transpoze[]) {
 			printf("%d\t", dizi_lower[i][j]);
 		}
 		printf("\n");
-	}	
+	}
 	printf("diğer hali\n");
-	for (int i = 0; i < n*n/4; i++)
+	for (int i = 0; i < n * n / 4+1; i++)
 	{
 		printf("%d= row->%d col->%d ve value=%d\n", i, element[i].row, element[i].col, element[i].value);
 	}
@@ -178,18 +179,18 @@ void print(int n, eleman element[], eleman transpoze[]) {
 		printf("\n");
 	}
 	printf("diğer hali\n");
-	for (int i = 0; i < n * n / 4; i++)
+	for (int i = 0; i < n * n / 4 +1; i++)
 	{
 		printf("%d= row->%d col->%d ve value=%d\n", i, transpoze[i].row, transpoze[i].col, transpoze[i].value);
 	}
 }
-int found_lower(int i,int j,int n, eleman element[]) {
-	for (int k = 1; k <element[0].value ; k++)
+int found_lower(int i, int j, int n, eleman element[]) {
+	for (int k = 1; k < element[0].value; k++)
 	{
-		if (element[k].col==j && element[k].row==i)
+		if (element[k].col == j && element[k].row == i)
 		{
 			return k;
-		}	
+		}
 	}
 }
 
@@ -201,10 +202,11 @@ int main() {
 	scanf_s("%d", &n);
 	itemcount = n / 4;
 	arraymaker(n);
-	element = (struct eleman*)malloc(n * n / 4 * sizeof(struct eleman));
-	transpose = (struct eleman*)malloc(n * n / 4 * sizeof(struct eleman));
-	append_for_lower(n, element ,transpose);
-	print(n, element,transpose);
+	int sizelast = n * n;
+	element = (struct eleman*)malloc(sizelast * sizeof(struct eleman));
+	transpose = (struct eleman*)malloc(sizelast * sizeof(struct eleman));
+	append_for_lower(n, element, transpose);
+	print(n, element, transpose);
 	int i, j;
 	//printf("lütfen bir i ve j değeri giriniz");
 	//scanf_s("%d", &i);
