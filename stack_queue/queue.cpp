@@ -81,3 +81,34 @@ int main() {
 	print();
 	return 0;
 }
+//ver3
+#include <stdio.h>
+#include <stdlib.h>
+
+int dizi[100];
+int rear = 0;
+int front = 0;
+void dequeue() {
+	front++;
+}
+void enqueque(int item) {
+	dizi[rear] = item;
+	rear++;
+}
+void print() {
+	printf("queque:");
+	for (int i = front; i < rear; i++)
+	{
+		printf("%d\t", dizi[i]);
+	}
+	printf("\n");
+}
+
+int main() {
+	enqueque(4);
+	enqueque(5);
+	print();
+	dequeue();
+	print();
+	return 0;
+}
