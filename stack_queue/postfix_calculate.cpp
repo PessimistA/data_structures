@@ -85,3 +85,120 @@ int main() {
 
 	return 0;
 }
+//ver2
+#define _CRT_SECURE_NO_WARNINGS // Visual Studio kullanıyorsanız bu satır gereklidir.
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX 100
+typedef enum
+{
+	left_parent, right_parent, add, subtract, multiply, divide, eos, operand
+}precedence;
+
+char expr[] = "2536+**5/2-";
+
+float dizi[MAX];
+int top = 0;
+float pop() {
+	if (top <= 0) {
+		printf("Stack is empty\n");
+		return 0;
+	}
+	return dizi[--top];
+}
+void push(float item) {
+	dizi[top++] = item;
+
+}
+void print() {
+	printf("stack:");
+	for (int i = 0; i < top; i++)
+	{
+		printf("%.2f\t", dizi[i]);
+	}
+	printf("\n");
+}
+precedence get_token(char* symbol, int* n) {
+	*symbol = expr[(*n)++];
+	if (*symbol=='(')
+	{
+		return left_parent;
+	}
+	if (*symbol == ')')
+	{
+		return right_parent;
+	}
+	if (*symbol == '+')
+	{
+		return add;
+	}
+	if (*symbol == '-')
+	{
+		return subtract;
+	}
+	if (*symbol == '*')
+	{
+		return multiply;
+	}
+	if (*symbol == '/')
+	{
+		return divide;
+	}
+	if (*symbol == '\0')
+	{
+		return eos;
+	}
+	else
+	{
+		return operand;
+	}
+}
+float eval(void) {
+	char symbol;
+	precedence token;
+	float op1, op2;
+	int n = 0;
+	int top = -1;
+	token = get_token(&symbol, &n);//buradan o yerdeki değeri alırsın
+	while (token != eos) {
+		if (token == operand)
+			push(symbol - '0');
+		else {
+			op1 = pop();
+			op2 = pop();
+
+			if (token==add)
+			{
+				push(op1 + op2);
+			}
+			if (token == subtract)
+			{
+				push(op2 - op1);
+			}
+			if (token == multiply)
+			{
+				push(op2 * op1);
+			}
+			if (token == divide)
+			{
+				if (op1!=0)
+				{
+					push(op2 / op1);
+				}
+			}
+		}
+		token = get_token(&symbol, &n);
+	}
+	return pop();
+}
+
+int main() {
+	float c = eval();
+	printf("%.2f", c);
+
+
+	return 0;
+}
