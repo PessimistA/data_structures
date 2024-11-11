@@ -77,7 +77,7 @@ void delete_item(char name[], int* list)
 		*list = linkedlist[p].link;
 		return_item(p);
 	}
-	else { //get the item pointed by ‘p’
+	else { //get the item pointed by â€˜pâ€™
 		linkedlist[q].link = linkedlist[p].link;
 		return_item(p);
 	}
