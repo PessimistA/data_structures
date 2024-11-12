@@ -49,7 +49,7 @@ void insert_item(char name[], int* list)//liste bağlı listenin başını point
 		strcpy(linkedlist[r].name, name);
 		q = EMPTY;
 		p = *list;//listenin başlangıç noktasu yani FİRST
-		while (p != EMPTY && strcmp(linkedlist[p].name, name) < 0) { //compare yapılır a dan z ye olacak şekilde
+		while (p != EMPTY && strcmp(linkedlist[p].name, name) < 0) { //compare yapılır a dan z ye olacak şekilde//büyükyüt olursa z den a ya sıralar
 			q = p;//q yani -1 e eleman eklenir burada listenin son boş kısmı atılır 
 			p = linkedlist[p].link;//free gibi yeni yer değeri atanır
 		}
