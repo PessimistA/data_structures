@@ -20,14 +20,14 @@ int first;
 void empty_list_maker() {
 	for (int i = 0; i < MAX_LIST; i++)
 	{
-		linkedlist[i].link = i+1;//link değerlerini 1 fazla olarak atama yap
+		linkedlist[i].link = i + 1;//link değerlerini 1 fazla olarak atama yap
 	}
 	linkedlist[MAX_LIST - 1].link = EMPTY;//son eleman linki -1 olmlaı null da -1 durumda
 	FREE = 0;//bu indextir yani bellekteki yeri
 	first = EMPTY;//başlangıça eleman yokken first ile son eleman aynıdır ve ikisi de -1 dedir
 }
 int get_item(int* r) {
-	if (FREE==EMPTY)//dizi için düşün 0 ın altında olursa eleman yoktur boş 
+	if (FREE == EMPTY)//dizi için düşün 0 ın altında olursa eleman yoktur boş 
 	{
 		return FALSE;
 	}
@@ -42,7 +42,7 @@ void return_item(int r) {
 	linkedlist[r].link = FREE;
 	FREE = r;
 }
-void insert_item(char name[], int* list)//liste bağlı listenin başını point eden bir pointer
+void insert_item(const char name[], int* list)//liste bağlı listenin başını point eden bir pointer
 {
 	int r, q, p;
 	if (get_item(&r)) {//yeni free değeri ve hala free olan kutunun indexi r olarak verilir
@@ -87,31 +87,32 @@ void delete_item(char name[], int* list)
 }
 void print() {
 	printf("tüm dizi:\n");
+	printf("index	name	link\n");
 	for (int i = 0; i < MAX_LIST; i++)
 	{
-		printf("index	name	link\n");
 		printf("%d\t%s\t%d\n", i, linkedlist[i].name, linkedlist[i].link);
 	}
 	printf("\nsadece dolu olan kısım:\n");
-	int sayaç = list_start;//sıralı yazdıracak
+	int sayaç = first;//sıralı yazdıracak
+	printf("index\tname\tlink\n");
 	while (sayaç != EMPTY) {
-		printf("index\tname\tlink\n");
 		printf("%d\t%s\t%d\n", sayaç, linkedlist[sayaç].name, linkedlist[sayaç].link);
 		sayaç = linkedlist[sayaç].link;
 	}
-	printf("free:%d", free);
+	printf("free:%d", FREE);
 	printf("first:%d", first);
 }
 
 int main() {
 	empty_list_maker();
-	char name[100][100] = { "ali","argo","olim","asel","vibral" };
+	char name[100][100] ={"apple", "orange", "banana", "grape", "kiwi"};
 	for (int i = 0; i < 5; i++)
 	{
-		insert_item(name[i],&first);
+		insert_item(name[i], &first);
 	}
 	print();
-
-	
+	delete_item(name[0], &first);
+	insert_item("heyla", &first);
+	print();
 	return 0;
 }
