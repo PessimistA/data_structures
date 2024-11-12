@@ -86,7 +86,6 @@ void delete_item(char name[], int* list)
 	}
 }
 void print() {
-	int sayaç = first;
 	printf("tüm dizi:\n");
 	for (int i = 0; i < MAX_LIST; i++)
 	{
@@ -94,10 +93,11 @@ void print() {
 		printf("%d\t%s\t%d\n", i, linkedlist[i].name, linkedlist[i].link);
 	}
 	printf("\nsadece dolu olan kısım:\n");
-	while (linkedlist[sayaç].link!=EMPTY) {
-		printf("index	name	link\n");
+	int sayaç = list_start;//sıralı yazdıracak
+	while (sayaç != EMPTY) {
+		printf("index\tname\tlink\n");
 		printf("%d\t%s\t%d\n", sayaç, linkedlist[sayaç].name, linkedlist[sayaç].link);
-		sayaç++;
+		sayaç = linkedlist[sayaç].link;
 	}
 	printf("free:%d", free);
 	printf("first:%d", first);
