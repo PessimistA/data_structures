@@ -172,3 +172,31 @@ int main() {
 	//printf("%d", result);
 	return 0;
 }
+
+//binary translater recursive
+int* array ;
+void recursive(int sayı,int sayaç) {
+	if (sayı<=0)
+	{
+		return;
+	}
+	else
+	{
+		array[sayaç] = (sayı % 2);
+		sayı = sayı / 2;
+		sayaç++;
+		recursive(sayı, sayaç);
+	}
+}
+int main() {
+	int sayı = 17;
+	int len = log2(sayı)+1;
+	array = (int*)malloc(len * sizeof(int));
+	int result = 0;
+	recursive(sayı,result);
+	for (int i = len-1; i >= 0; i--)
+	{
+		printf("%d", array[i]);
+	}
+	return 0;
+}
