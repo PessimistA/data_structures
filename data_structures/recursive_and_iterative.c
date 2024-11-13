@@ -811,3 +811,90 @@ void binary_reverse(int dizi[], int basamak,int başlangıç,int number) {
         binary_reverse(dizi, basamak, başlangıç + 1, number);
     }
 }
+
+//merge sort
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#include<math.h>
+
+
+void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;//sol taraf için
+    int n2 = right - mid;//sağ taraf için
+
+    int* L,*R;
+    L = (int*)malloc(n1 * sizeof(int));
+    R = (int*)malloc(n2 * sizeof(int));
+
+    // Sol ve sağ alt dizileri oluşturma
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[left + i];//sol tarafın elemanları eklenir
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];//sağ tarafın elemanları eklenir
+
+    int i = 0, j = 0, k = left;//k ortak dizinin başlangıç noktasıdır
+
+    // L ve R dizilerini sıralı bir şekilde ana diziye birleştirme
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {//soldaki dizi küçükse sağdaki dizi küçükse yapılır
+            arr[k] = L[i];
+            i++;
+        }
+        else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    // Kalan elemanları ekleme
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+    free(L);
+    free(R);
+}
+
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {//binary gibi
+        int mid = left + (right - left) / 2;
+
+        // Alt dizileri sıralama
+        mergeSort(arr, left, mid);//binary sol tarafın kuralı gibi
+        mergeSort(arr, mid + 1, right);//binary sağ tarafın kuralı
+
+        // Alt dizileri birleştirme
+        merge(arr, left, mid, right);
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int arr[] = { 38, 27, 43, 3, 9, 82, 10 };
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Verilen dizi: ");
+    printArray(arr, arr_size);
+
+    mergeSort(arr, 0, arr_size - 1);
+
+    printf("Sıralanmış dizi: ");
+    printArray(arr, arr_size);
+    return 0;
+}
+
