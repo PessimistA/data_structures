@@ -28,7 +28,8 @@ int main() {
 	return 0;
 }
 
-//iterative binary
+//iterative binary search
+
 int array[100] = { 2,4,6,7,8 };
 int main() {
 	int len = 0;
@@ -55,5 +56,119 @@ int main() {
 			break;
 		}		
 	}	
+	return 0;
+}
+
+//bir diziyi recursive olarak toplayan
+
+int array[100] = { 2,4,6,7,8 };
+void recursive(int start,int len,int* result) {
+	if (start==len)
+	{
+		return;
+	}
+	else
+	{
+		*result = *result + array[start];
+		recursive(start + 1, len, result);
+	}
+}
+int main() {
+	int len = 0;
+	for (int i = 0; i < 100; i++)
+	{
+		if (array[i]!=0)
+		{
+			len++;
+		}
+	}
+	int result = 0;
+	recursive(0, len, &result);
+	printf("%d", result);
+	return 0;
+}
+
+//finding max mim as recursive
+
+int array[100] = { 2,44,6,7,8 };
+void recursive(int start,int len,int* result,int max) {
+	if (start==len)
+	{
+		return;
+	}
+	else
+	{
+		if (max< array[start])
+		{
+			max = array[start];
+		}
+		*result = max;
+		recursive(start + 1, len, result,max);
+	}
+}
+int main() {
+	int len = 0;
+	for (int i = 0; i < 100; i++)
+	{
+		if (array[i]!=0)
+		{
+			len++;
+		}
+	}
+	int result = 0;
+	int max = array[0];
+	recursive(0, len, &result,max);
+	printf("%d", result);
+
+	return 0;
+}
+
+//polindrom bulan kod
+char array[100] = {"assi"};
+void recursive(int start,int len,int* result,int len2) {
+	if (len%2==0)
+	{
+		if (start > len)
+		{
+			printf("bu bir polindromdur");
+			return;
+		}
+		else
+		{
+			if (array[start] == array[len])
+			{
+				recursive(start + 1, len - 1, result, len2);
+			}
+			else
+			{
+				printf("bu bir polindrom değildir");
+			}
+		}
+	}
+	else
+	{
+		if (start == len)
+		{
+			printf("bu bir polindromdur");
+			return;
+		}
+		else
+		{
+			if (array[start] == array[len])
+			{
+				recursive(start + 1, len - 1, result, len2);
+			}
+			else
+			{
+				printf("bu bir polindrom değildir");
+			}
+		}
+	}
+}
+int main() {
+	int len = strlen(array);
+	int result = 0;
+	recursive(0, len-1, &result,len);
+	//printf("%d", result);
 	return 0;
 }
