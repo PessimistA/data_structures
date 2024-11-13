@@ -897,4 +897,73 @@ int main() {
     printArray(arr, arr_size);
     return 0;
 }
+//heap sort
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#include<math.h>
 
+
+// Yığın yapısını koruyan heapify fonksiyonu
+void heapify(int arr[], int n, int i) {
+    int largest = i;          // Kök
+    int left = 2 * i + 1;      // Sol çocuk
+    int right = 2 * i + 2;     // Sağ çocuk
+
+    // Eğer sol çocuk kökten büyükse
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    // Eğer sağ çocuk şu ana kadar en büyükten büyükse
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    // Eğer en büyük, kök değilse yer değiştir
+    if (largest != i) {
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+
+        // Alt ağacı da heapify et
+        heapify(arr, n, largest);
+    }
+}
+
+// Heap Sort fonksiyonu
+void heapSort(int arr[], int n) {
+    // Diziye yığın yapısı oluştur
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    // Tek tek elemanları yığından çek ve sıralanmış dizinin sonuna koy
+    for (int i = n - 1; i > 0; i--) {
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+
+        // Azalan yığın için kökü yeniden heapify et
+        heapify(arr, i, 0);
+    }
+}
+
+// Diziyi yazdırmak için fonksiyon
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int arr[] = { 12, 11, 13, 5, 6, 7 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Verilen dizi: ");
+    printArray(arr, n);
+
+    heapSort(arr, n);
+
+    printf("Sıralanmış dizi: ");
+    printArray(arr, n);
+    return 0;
+}
