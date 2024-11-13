@@ -200,3 +200,27 @@ int main() {
 	}
 	return 0;
 }
+
+//towers of hanoi
+
+void towerOfHanoi(int n, char ilk_çubuk, char ikinci_çubuk, char yardımcı_çubuk) {
+	if (n == 1) {
+		printf("Move disk 1 from %c to %c\n", ilk_çubuk, ikinci_çubuk);
+		return;
+	}
+
+	towerOfHanoi(n - 1, ilk_çubuk, yardımcı_çubuk, ikinci_çubuk);
+
+	printf("Move disk %d from %c to %c\n", n, ilk_çubuk, ikinci_çubuk);
+
+	towerOfHanoi(n - 1, yardımcı_çubuk, ikinci_çubuk, ilk_çubuk);
+}
+
+int main() {
+	int n;
+	printf("Enter the number of disks: ");
+	scanf("%d", &n);
+	printf("Steps to solve Tower of Hanoi with %d disks:\n", n);
+	towerOfHanoi(n, 'A', 'C', 'B'); 
+	return 0;
+}
