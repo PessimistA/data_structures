@@ -274,5 +274,87 @@ int main() {
 	return 0;
 }
 
+//triangular matrix
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#include<math.h>
 
+#define MAX 100
+int** matrix;
+int* storage;
+void print(int n) {
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			printf("%d\t", matrix[i][j]);
+		}
+		printf("\n");
+	}
+	if (storage!=NULL)
+	{
+		int len = n * (n + 1) / 2;
+		for (int j = 0; j < len; j++)
+		{
+			printf("%d\t", storage[j]);
+		}
+	}
+}
+void readtriangularmatrix(int n) {
+	int sayaç = 0;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j <= i; j++)
+		{
+			int k = (i * (i + 1) / 2) + j;
+			storage[k] = matrix[i][j];
+		}
+	}
+}
+void matrixMAker(int n) {
+	matrix = (int**)malloc(n * sizeof(int*));
+	for (int i = 0; i < n; i++)
+	{
+		matrix[i] = (int*)malloc(n * sizeof(int));
+	}
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			matrix[i][j] = 0;
+		}
+	}	
+	int sayaç = 0;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = i; j >=0; j--)
+		{
+			matrix[i][j] = rand() % 100;
+			if (matrix[i][j]==0)
+			{
+				j++;//++ yapmak eski haline geri getirir
+			}
+		}
+	}
+	print(n);
+	int len = n * (n + 1) / 2;//parantez önemli
+	storage= (int*)malloc(len * sizeof(int));
+	readtriangularmatrix(n);
+	print(n);
 
+}
+int main() {
+	int n;
+	printf("lütfen bir n değeri alınız");
+	scanf_s("%d", &n);
+	matrixMAker(n);
+
+	for (int i = 0; i < n; i++)
+	{
+		free(matrix[i]);
+	}
+	free(matrix);
+	free(storage);
+}
