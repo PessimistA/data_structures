@@ -224,3 +224,55 @@ int main() {
 	towerOfHanoi(n, 'A', 'C', 'B'); 
 	return 0;
 }
+
+//ters çeviren fonksiyon
+int array[10] = {1,2,3,4,5,6};
+void recursive(int start,int last,int len) {
+	if (len % 2 == 0)
+	{
+		if (start > last)
+		{
+			return;
+		}
+		else
+		{
+			int geç = array[start];
+			array[start] = array[last];
+			array[last] = geç;
+			recursive(start + 1, last - 1, len);
+		}
+	}
+	else
+	{
+		if (start == last)
+		{
+			return;
+		}
+		else
+		{
+			int geç = array[start];
+			array[start] = array[last];
+			array[last] = geç;
+			recursive(start + 1, last - 1, len);
+		}
+	}
+}
+int main() {
+	int len=0;
+	for (int i = 0; i < 10; i++)
+	{
+		if (array[i]!=0)
+		{
+			len++;
+		}
+	}
+	recursive(0,len-1,len);
+	for (int i = 0; i< len; i++)
+	{
+		printf("%d", array[i]);
+	}
+	return 0;
+}
+
+
+
