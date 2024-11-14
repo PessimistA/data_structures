@@ -877,3 +877,100 @@ int main() {
 	free(search);
 	return 0;
 }
+//parantez kontrol etme
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#define Max 100
+char stack[Max];
+int top = -1;
+
+
+void pop() {
+	if (top==-1)
+	{
+		printf("empty");
+	}
+	else
+	{
+		top--;
+	}
+}
+void push(char value) {
+	stack[++top] = value;
+}
+
+void print() {
+	printf("\nstack");
+	for (int i = 0; i <= top; i++)
+	{
+		printf(" %d ", stack[i]);
+	}
+}
+int topreturn() {
+	if (stack[top]=='(')
+	{
+		return -1;
+	}
+	if (stack[top] == '[')
+	{
+		return -2;
+	}
+	if (stack[top] == '{')
+	{
+		return -3;
+	}
+}
+int main() {
+	char kelime[Max] = { "(alisa)[{}2.]" };
+	int len = strlen(kelime);
+	for (int i = 0; i <= len; i++)
+	{
+		if (kelime[i] == '(' || kelime[i] == '[' || kelime[i] == '{') {
+			push(kelime[i]);
+		}
+		else 
+		{
+			if (kelime[i] == ')')
+			{
+				if (topreturn() == -1)
+				{
+					pop();
+				}
+				else
+				{
+					printf("tüm parantezler uyumlu değildir");
+				}
+			}
+			if (kelime[i] == ']')
+			{
+				if (topreturn() == -2)
+				{
+					pop();
+				}
+				else
+				{
+					printf("tüm parantezler uyumlu değildir");
+				}
+			}
+			if (kelime[i] == '}')
+			{
+				if (topreturn() == -3)
+				{
+					pop();
+				}
+				else
+				{
+					printf("tüm parantezler uyumlu değildir");
+				}
+			}
+		}
+	}
+	if (top==-1)
+	{
+		printf("uyumludur");
+	}
+	return 0;
+}
