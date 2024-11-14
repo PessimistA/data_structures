@@ -628,3 +628,128 @@ int main() {
 	free(sparse);
 	return 0;
 }
+
+//sparse ve transpoze hesabı
+#include <stdio.h>
+#include <stdlib.h>
+
+int** alt;
+int index = 0;
+void print(int n);
+
+struct  kullan{
+	int değer;
+	int row;
+	int col;
+}*sparse,*Transpoze;
+void transpoze(int n);
+
+void addarray(int n);
+void arraymaker(int n) {//bu fonksiyon dinamik array oluşturmamı sağlar  ve itemleri ekler
+	alt = (int**)malloc(n * sizeof(int*));
+	for (int i = 0; i < n; i++)
+	{
+		alt[i] = (int*)malloc(n * sizeof(int));//dinamik bellek tasarlamak istedim böylelikle kendim istediğim değeri verebileceğim
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++) {
+			alt[i][j] = 0;//başlangıçta her bir basamağı 0 ile doldurur
+		}
+	}
+	int itemler = (n * n) * 0.4;
+	int i, j;
+	while (itemler > 0) {
+		i = rand() % n;
+		j = rand() % n;
+		alt[i][j] = rand() % 10;
+		if (alt[i][j]==0)
+		{
+			j--;
+			i--;
+		}
+		itemler--;
+	}
+	print(n);
+	int item = (n * n) * 0.4;
+	sparse = (kullan*)malloc(item * sizeof(kullan));
+	Transpoze = (kullan*)malloc(item * sizeof(kullan));
+	addarray(n);
+	transpoze(n);
+}
+
+void print(int n) {
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++) {
+			printf("%d\t", alt[i][j]);//başlangıçta her bir basamağı 0 ile doldurur
+		}
+		printf("\n");
+	}
+
+}
+void addarray(int n) {
+	int itemler = 1;
+	sparse[0].değer = (n * n) * 0.4-1;
+	sparse[0].row = n;
+	sparse[0].col = n;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++) {
+			if (alt[i][j]!=0)
+			{
+				sparse[itemler].değer = alt[i][j];
+				sparse[itemler].row = i;
+				sparse[itemler].col = j;
+				itemler++;
+			}
+		}
+	}
+}
+
+void transpoze(int n) {
+	int sayaç = 1;
+	Transpoze[0].değer =sparse[0].değer;
+	Transpoze[0].col =sparse[0].row;
+	Transpoze[0].row =sparse[0].col;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++) {
+			if (alt[j][i] != 0)
+			{
+				Transpoze[sayaç].değer = alt[j][i];
+				Transpoze[sayaç].row = j;
+				Transpoze[sayaç].col = i;
+				sayaç++;
+			}
+		}
+	}
+}
+void printarray(int n) {
+	printf("normal hali\n");
+	for (int i = 0; i < (n * n) * 0.4; i++)
+	{
+		printf("sparse[%d]==alt[%d][%d]=%d\n", i,sparse[i].row, sparse[i].col, sparse[i].değer);
+	}
+	printf("transpoze hali\n");
+	for (int i = 0; i < (n * n) * 0.4; i++)
+	{
+		printf("transpoze[%d]==alt[%d][%d]=%d\n", i, Transpoze[i].col, Transpoze[i].row, Transpoze[i].değer);
+	}
+}
+
+int main() {
+	int n = 0;
+	printf("bir size giriniz\n");
+	scanf_s("%d", &n);
+	arraymaker(n);
+	printarray(n);
+	for (int i = 0; i < n; i++)
+	{
+		free(alt[i]);
+	}
+	free(alt);
+	free(sparse);
+	return 0;
+}
