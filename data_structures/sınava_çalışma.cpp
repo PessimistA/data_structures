@@ -753,3 +753,127 @@ int main() {
 	free(sparse);
 	return 0;
 }
+
+//band matrix
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int** alt;
+int index = 0;
+void print(int n);
+int* band;
+int* search;
+
+void addarray(int n, int a, int b);
+
+void arraymaker(int n,int a,int b) {//bu fonksiyon dinamik array oluşturmamı sağlar  ve itemleri ekler
+	alt = (int**)malloc(n * sizeof(int*));
+	for (int i = 0; i < n; i++)
+	{
+		alt[i] = (int*)malloc(n * sizeof(int));//dinamik bellek tasarlamak istedim böylelikle kendim istediğim değeri verebileceğim
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++) {
+			alt[i][j] = 0;//başlangıçta her bir basamağı 0 ile doldurur
+		}
+	}
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++) {
+			alt[i][j] = rand()%10;
+			if (alt[i][j]==0)
+			{
+				j--;
+			}
+		}
+	}
+	int k = 0;
+	for (int i = n-1; i >=a-1; i--)
+	{
+		for (int j = 0; j <= i-a; j++) {
+			alt[i][j] = 0;
+		
+		}
+	}
+	for (int j = n-1; j >=b-1; j--)
+	{
+		for (int i = 0; i <=j-b; i++) {
+			alt[i][j] = 0;
+
+		}
+	}
+	int len = n * (a + b - 1) - ((a - 1) * a) / 2 - (b * (b - 1)) / 2;
+	band = (int*)malloc(len * sizeof(int));
+	int len2 = a + b - 1;
+	search = (int*)malloc(len2 * sizeof(int));
+	addarray(n, a, b);
+
+}
+
+void print(int n,int a,int b) {
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++) {
+			printf("%d\t", alt[i][j]);//başlangıçta her bir basamağı 0 ile doldurur
+		}
+		printf("\n");
+	}
+
+	for (int i = 0; i < n * (a + b - 1) - ((a - 1) * a) / 2 - (b * (b - 1)) / 2; i++)
+	{
+		printf("%d\t", band[i]);//başlangıçta her bir basamağı 0 ile doldurur
+	}
+
+
+}
+void addarray(int n,int a,int b) {
+	int itemnum =0 ;
+	for (int i = -a + 1; i <= b - 1; i++)
+	{
+		search[i + a - 1] = itemnum;
+		itemnum = itemnum + (n - abs(i));
+	}
+	int k = 0;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (j > i)//büyükse b ye olanı değerlendir
+			{
+				if (j - i < b)
+				{
+					band[search[a - 1 + j - i] + i] = alt[i][j];
+				}
+			}
+			else if(i-j<a)
+			{
+				band[search[a - 1 + j - i] + j] = alt[i][j];
+			}
+			
+		}
+	}
+	
+}
+
+int main() {
+	int n = 0,a=0,b=0;
+	printf("bir size giriniz\n");
+	scanf_s("%d", &n);
+	printf("bir a giriniz\n");
+	scanf_s("%d", &a);
+	printf("bir b giriniz\n");
+	scanf_s("%d", &b);
+	arraymaker(n,a,b);
+	print(n,a,b);
+	for (int i = 0; i < n; i++)
+	{
+		free(alt[i]);
+	}
+	free(alt);
+	free(band);
+	free(search);
+	return 0;
+}
