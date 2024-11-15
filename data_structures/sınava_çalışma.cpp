@@ -974,3 +974,129 @@ int main() {
 	}
 	return 0;
 }
+
+//linked list özellikleri
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#define Max 10
+#define EMPTY -1
+#define TRUE 1
+#define FALSE 0
+
+struct kullan {
+	int link;
+	char isim[Max];
+}dizi[Max];
+int FREE ;
+int first;
+int first2;
+
+void makelist() {
+	for (int i = 0; i < Max; i++)
+	{
+		dizi[i].link = i + 1;
+	}
+	FREE = 0;
+	first = EMPTY;
+	first2 = EMPTY;
+}
+int get_item(int* r) {
+	*r = FREE;
+	FREE = dizi[FREE].link;
+	return true;
+}
+void insert_item(char value[],int* list) {
+	int q, r, p;
+	if (get_item(&r))
+	{
+		strcpy(dizi[r].isim, value);
+		q = EMPTY;
+		p = *list;
+		while (p!=EMPTY && strcmp(dizi[p].isim,value)<0) {
+			q = p;//p değişken p yi ilk eleman olarak düşün  q ya bu değer verilip kendisi artıyor kontrol için zaten kontrolü de p ile yaparız dikkat et
+			p = dizi[p].link;
+		}
+		if (q==EMPTY)//dizinin ilk elemanı ataması burada yapılır
+		{
+			*list = r;//ilk elemanın indeximi belirler
+			dizi[r].link = p;//r ilk elemanın indexiydi p de first idi üstteki while daha burada olmamış durumda unutma
+		}
+		else
+		{
+			dizi[q].link = r;
+			dizi[r].link = p;
+		}
+	}
+}
+void return_item(int r) {
+	dizi[r].link = FREE;
+	FREE = r;
+}
+void delete_item(char value[], int* list) {
+	int q, p;
+	q = EMPTY;
+	p = *list;
+	int i;
+	while (p != EMPTY && (i=strcmp(dizi[p].isim, value)) < 0) {
+		q = p;
+		p = dizi[p].link;
+	}
+	if (p==EMPTY&& i>0)// listenin sonundan 
+	{
+		printf("bulunamadı");
+	}
+	else if (q==EMPTY) {//listenin başından çıkarır
+		*list = dizi[p].link;
+		return_item(p);//yeni free belirlenir bununla
+	}
+	else//listenin ortasından çıkarır
+	{
+		dizi[q].link = dizi[p].link;//aradan r yi çıkart
+		return_item(p);
+	}
+
+}
+void print() {
+	int sayaç = first;	int sayaç2 = first2;
+	printf("index\tisim\tlink\n");
+	for (int i = 0; i < Max; i++)
+	{
+		printf("%d\t%s\t%d\n", i, dizi[i].isim, dizi[i].link);
+	}	printf("index\tisim\tlink\n");
+	while (sayaç != EMPTY) {
+		printf("%d\t%s\t%d\n", sayaç, dizi[sayaç].isim, dizi[sayaç].link);
+		sayaç = dizi[sayaç].link;
+	}
+	if (first2!=EMPTY)
+	{
+		while (sayaç2 != EMPTY) {
+			printf("%d\t%s\t%d\n", sayaç2, dizi[sayaç2].isim, dizi[sayaç2].link);
+			sayaç2 = dizi[sayaç2].link;
+		}
+	}
+
+}
+
+int main() {
+	makelist();
+	char names[Max][Max] = { "alisa","basil","olimi","agroda","vibril","albina" };
+	for (int i = 0; i < 6; i++)
+	{
+		insert_item(names[i], &first);
+	}
+	print();
+	char names3[Max][Max] = { "asa","asil" };
+	char names2[Max] = "alisa";
+	delete_item(names2, &first);
+	print();
+	for (int i = 0; i < 2; i++)
+	{
+		insert_item(names3[i], &first2);
+	}
+	print();
+	return 0;
+}
