@@ -1100,3 +1100,29 @@ int main() {
 	print();
 	return 0;
 }
+
+//insert ve delete arasındaki fark
+
+void insert_item(char value[],int* list) {
+	int q, r, p;
+	if (get_item(&r))
+	{
+		strcpy(dizi[r].isim, value);
+		q = EMPTY;
+		p = *list;
+		while (p!=EMPTY ) {
+			q = p;//p değişken p yi ilk eleman olarak düşün  q ya bu değer verilip kendisi artıyor kontrol için zaten kontrolü de p ile yaparız dikkat et
+			p = dizi[p].link;
+		}
+		if (q==EMPTY)//dizinin ilk elemanı ataması burada yapılır
+		{
+			*list = r;//		*list = dizi[p].link;
+			dizi[r].link = p;//		return_item(p);
+		}
+		else
+		{
+			dizi[q].link = r;//		dizi[q].link = dizi[p].link;//aradan r yi çıkart
+			dizi[r].link = p;//		return_item(p);
+		}
+	}
+}
