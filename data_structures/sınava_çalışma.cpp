@@ -1126,3 +1126,204 @@ void insert_item(char value[],int* list) {
 		}
 	}
 }
+//postfix prefix için yöntem önce bunlar olursa bunu kullan diğerinde öncelik ve operatorlerde var
+#define _CRT_SECURE_NO_WARNINGS // Visual Studio kullanıyorsanız bu satır gereklidir.
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX 100
+char stack[MAX][MAX];
+int top = -1;
+
+void push(char* value) {
+	top++;
+	strcpy(stack[top],value) ;
+}
+void pop(char* op) {
+	if (top==-1)
+	{
+		return;
+	}
+	strcpy(op, stack[top]);
+	top--;
+}
+
+int isoperand(char ch) {
+	return isalpha(ch) || isdigit(ch);
+}
+void reverse(char* value) {
+	int len = strlen(value);
+	int start = 0;
+	while (!(start > len)) {
+		char geç = value[len-1];
+		value[len-1] = value[start];
+		value[start] = geç;
+		start++;
+		len--;
+	}
+}
+void reverseParanteheses(char* value) {
+	reverse(value);
+	int len = strlen(value);
+	for (int i = 0; i < len; i++)
+	{
+		if (value[i] == '(') {
+			value[i] = ')';
+		}
+		else if (value[i] == ')') {
+			value[i] = '(';
+		}
+	}
+}
+void translater(char value[],char prefix[]) {
+	int len = strlen(value);
+	int j = 0;
+	for (int i = 0; i < len; i++)
+	{
+		char ch = value[i];
+		if (isoperand(ch))
+		{
+			char operand[2] = {ch,'\0'};
+			push(operand);
+		}
+		else
+		{
+			char op1[MAX], op2[MAX];
+			pop(op1);
+			pop(op2);
+
+			char newep[MAX]="";//çok önemli boş tanıman gerekir
+			
+			strcat(newep, op1);//op1 başta olursa prefix kullanırsın yani reverse aç//op2 olursa postfix reverse kullanma
+			strncat(newep, &ch, 1);//infix için ortaya postfix e dönüşürse sona prefix e dönüşürse başa
+			strcat(newep, op2);
+			push(newep);//
+		}
+	}
+	strcpy(prefix, stack[top]);
+}
+
+int main() {
+	char value[MAX] = "*-a/bc-/akl";
+	char prefix[MAX];
+	reverseParanteheses(value);
+	printf("%s\n", value);
+	translater(value, prefix);
+	printf("%s", prefix);
+	return 0;
+}
+//infix başta ise bunu kullan
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX 100
+
+// Stack yapısı
+char stack[MAX];
+int top = -1;
+
+// Stack işlemleri
+void push(char ch) {
+    stack[++top] = ch;
+}
+
+char pop() {
+    if (top == -1) {
+        return -1;
+    }
+    return stack[top--];
+}
+
+int precedence(char ch) {
+    if (ch == '+' || ch == '-') return 1;
+    if (ch == '*' || ch == '/') return 2;
+    if (ch == '^') return 3;
+    return 0;
+}
+
+int isOperator(char ch) {
+    return (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^');
+}
+
+// İnfix'i tersine çevir
+void reverse(char* value) {
+	int len = strlen(value);
+	int start = 0;
+	while (!(start > len)) {
+		char geç = value[len-1];
+		value[len-1] = value[start];
+		value[start] = geç;
+		start++;
+		len--;
+	}
+}
+
+// Parantezleri ters çevir
+void reverseParanteheses(char* value) {
+	reverse(value);
+	int len = strlen(value);
+	for (int i = 0; i < len; i++)
+	{
+		if (value[i] == '(') {
+			value[i] = ')';
+		}
+		else if (value[i] == ')') {
+			value[i] = '(';
+		}
+	}
+}
+
+// İnfix'i Prefix'e dönüştür
+void infixToPrefix(char* infix, char* prefix) {
+    reverse(infix);  // İfadenin tersini al
+    reverseParentheses(infix);  // Parantezleri ters çevir
+
+    int len = strlen(infix);
+    int j = 0;
+
+    // Postfix benzeri işlemleri yap
+    for (int i = 0; i < len; i++) {
+        char ch = infix[i];
+
+        if (isalnum(ch)) {
+            prefix[j++] = ch;
+        }
+        else if (ch == '(') {
+            push(ch);//işaretleri ve parantezleri ekleriz
+        }
+        else if (ch == ')') {//kapanıyorsa arada olanları eklemeliyiz
+            while (top != -1 && stack[top] != '(') {
+                prefix[j++] = pop();//çıkanları ekle
+            }
+            pop();  // '(' karakterini pop et
+        }
+        else if (isOperator(ch)) {
+            while (top != -1 && precedence(stack[top]) >= precedence(ch)) {//en üstteli* mesela + gelirse ve büyükse * çıkar
+                prefix[j++] = pop();
+            }
+            push(ch);
+        }
+    }
+
+    // Kalan operatörleri prefix'e ekle
+    while (top != -1) {
+        prefix[j++] = pop();
+    }
+
+    prefix[j] = '\0';  // Null terminate
+    reverse(prefix);   // Prefix'i tersine çevir
+}
+
+int main() {
+    char infix[] = "(A-B/C)*(A/K-L)";
+    char prefix[MAX];
+
+    infixToPrefix(infix, prefix);
+    printf("Infix: %s\n", infix);
+    printf("Prefix: %s\n", prefix);
+
+    return 0;
+}
