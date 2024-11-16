@@ -63,7 +63,7 @@ void arraymaker(int n) {
 			dizi_lower[i][j] = 0;
 		}
 	}
-	int itemler = n * n / 4;
+	int itemler = n * n / 4;//O(n2)
 	while (itemler > 0) {
 		k = rand() % (n);
 		l = rand() % (n);
@@ -79,7 +79,7 @@ void arraymaker(int n) {
 		}
 	}
 }
-void append_for_lower(int n,eleman element[]) {
+void append_for_lower(int n,eleman element[]) {//O(n2)
 	element[0].col = n;
 	element[0].row = n;
 	element[0].value = n*n/4;
