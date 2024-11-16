@@ -212,7 +212,7 @@ void arraymaker(int n,int a,int b) {
 	band = (int*)malloc(band_size * sizeof(int));
 	search = (int*)malloc(search_size * sizeof(int));
 }
-void append_for_lower(int n,int a,int b){
+void append_for_lower(int n,int a,int b){O(n2)
 	int itemnumber = 0;
 	//-a+1 değeri köşegendeki j-i sayısını verir
 	for (int k = -a + 1; k < b; k++) {//search her bir köşegenin başlanıç noktasını hesaplar
