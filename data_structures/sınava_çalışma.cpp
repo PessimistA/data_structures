@@ -1580,4 +1580,81 @@ int main() {
 	printf("Sonuç: %d\n", stack_number[top_number]);
 	return 0;
 }
+//postfix calculate
+#define _CRT_SECURE_NO_WARNINGS // Visual Studio kullanıyorsanız bu satır gereklidir.
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+void translater(char value[]);
+#define MAX 100
+int stack_number[MAX];
+int top_number = -1;
+char stack_opeartor[MAX];
+int top_operator = -1;
 
+void push_number(int value) {
+	top_number++;
+	stack_number[top_number] = value;
+	for (int i = 0; i < top_number; i++)
+	{
+		printf("number:%d\n", stack_number[i]);
+	}
+}
+
+void pop_number(int* op) {
+	if (top_number == -1) {
+		return;
+	}
+	*op = stack_number[top_number];
+	top_number--;
+}
+
+int isoperand(char ch) {
+	return isdigit(ch);
+}
+
+int isoperator(char ch) {
+	return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+}
+
+int calculate(char ch, int op1, int op2) {
+	switch (ch) {
+	case '+':
+		return op1 + op2;
+	case '-':
+		return op1 - op2;
+	case '*':
+		return op1 * op2;
+	case '/':
+		return op1 / op2;
+	default:
+		return -1;
+	}
+}
+
+void translater(char value[]) {
+	int op1, op2;
+	char op;
+	int len = strlen(value);
+	for (int i = 0; i < len; i++)
+	{
+		char ch = value[i];
+		if (isoperand(ch)) {
+			push_number(ch-'0');
+		}
+		else if (isoperator(ch)) {
+			pop_number(&op1);
+			pop_number(&op2);
+			int answer = calculate(ch, op2, op1); // Dikkat: Sıra önemli!
+			push_number(answer);
+		}
+	}	
+}
+
+int main() {
+	char value[MAX] = "2536+**5/2-";
+	translater(value);
+	printf("Sonuç: %d\n", stack_number[top_number]);
+	return 0;
+}
