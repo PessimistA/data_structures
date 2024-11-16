@@ -1459,5 +1459,125 @@ int main() {
 	printf("%d", stack_number[top_number]);
 	return 0;
 }
+//prefix calculate
+#define _CRT_SECURE_NO_WARNINGS // Visual Studio kullanıyorsanız bu satır gereklidir.
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+void translater(char value[]);
+#define MAX 100
+int stack_number[MAX];
+int top_number = -1;
+char stack_opeartor[MAX];
+int top_operator = -1;
 
+void push_number(int value) {
+	top_number++;
+	stack_number[top_number] = value;
+	for (int i = 0; i < top_number; i++)
+	{
+		printf("number:%d\n", stack_number[i]);
+	}
+}
+
+void pop_number(int* op) {
+	if (top_number == -1) {
+		return;
+	}
+	*op = stack_number[top_number];
+	top_number--;
+}
+
+int isoperand(char ch) {
+	return isdigit(ch);
+}
+
+int isoperator(char ch) {
+	return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+}
+
+int calculate(char ch, int op1, int op2) {
+	switch (ch) {
+	case '+':
+		return op1 + op2;
+	case '-':
+		return op1 - op2;
+	case '*':
+		return op1 * op2;
+	case '/':
+		return op1 / op2;
+	default:
+		return -1;
+	}
+}
+void reverse(char* value) {
+	int len = strlen(value);
+	int start = 0;
+	while (!(start >= len)) {
+		char geç = value[len - 1];
+		value[len - 1] = value[start];
+		value[start] = geç;
+		start++;
+		len--;
+	}
+	printf("%s", value);
+}
+void ayrıştırıcı(char ch[]) {
+	int len = strlen(ch); 
+	char word[MAX];
+	char words[MAX][MAX];
+	int j = 0,k=0;
+	for (int i = 0; ch[i] !='\0'; i++)
+	{
+		if (!(isblank(ch[i]))) {
+			word[j++] = ch[i];
+		}
+		else if (j >0)
+		{
+			word[j] = '\0';
+			strcpy(words[k], word);
+			k++;
+			j = 0;
+		}
+	}
+	if (j > 0) {
+		word[j] = '\0';
+		strcpy(words[k], word);
+		k++;
+	}
+	for (int i = 0; i < k; i++)
+	{
+		reverse(words[i]);
+	}
+	for (int i = 0; i < k; i++)
+	{
+		printf("\n%s", words[i]);
+		translater(words[i]);
+	}
+}
+void translater(char value[]) {
+	int op1, op2;
+	char op;
+
+	if (isoperand(value[0])) {
+		int number = atoi(value);
+		push_number(number);
+	}		
+	else if (isoperator(value[0])) {
+		pop_number(&op1);
+		pop_number(&op2);
+		int answer = calculate(value[0], op1, op2); // Dikkat: Sıra önemli!
+		push_number(answer);
+	}	
+}
+
+int main() {
+	char value[MAX] = "- / * 20 * 50 + 3 6 300 2 ";
+	reverse(value);
+	ayrıştırıcı(value);
+	////translater(value);
+	printf("Sonuç: %d\n", stack_number[top_number]);
+	return 0;
+}
 
