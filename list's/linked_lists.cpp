@@ -43,7 +43,7 @@ void return_item(int r) {
 	FREE = r;
 }
 void insert_item(const char name[], int* list)//liste bağlı listenin başını point eden bir pointer
-{
+{//O(N)
 	int r, q, p;
 	if (get_item(&r)) {//yeni free değeri ve hala free olan kutunun indexi r olarak verilir
 		strcpy(linkedlist[r].name, name);
