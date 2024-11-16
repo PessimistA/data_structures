@@ -189,7 +189,7 @@ int find_index(int i, int j, int n) {
 		return -1;
 	}
 }
-void readingoftriangular(int n) {
+void readingoftriangular(int n) {//O(n2)
 	sizing(n);
 	sizing2(n);
 	int counter = 1;
