@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-void buble_sort(int dizi[], int n) {
+void buble_sort(int dizi[], int n) {O(n2)
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++) {
@@ -15,7 +15,7 @@ void buble_sort(int dizi[], int n) {
 		}
 	}
 }
-void selection_Sort(int dizi[], int n) {
+void selection_Sort(int dizi[], int n) {O(n2)
 	for (int i = 0; i < n-1; i++)
 	{
 		for (int j = i+1; j < n; j++) {
@@ -28,7 +28,7 @@ void selection_Sort(int dizi[], int n) {
 		}
 	}
 }
-void insertion_Sort(int dizi[], int n) {
+void insertion_Sort(int dizi[], int n) {O(n2)
 	for (int i = 1; i < n ; i++)
 	{
 		for (int j = i ; j > 0; j--) {
@@ -41,7 +41,7 @@ void insertion_Sort(int dizi[], int n) {
 		}
 	}
 }
-int binary_search(int dizi[], int n,int search_number) {
+int binary_search(int dizi[], int n,int search_number) {O(logn)
 	int start = 0, ending = n;
 	int middle=0;
 	while (search_number != dizi[middle]) {//ya da (start<=ending)
@@ -62,7 +62,7 @@ int binary_search(int dizi[], int n,int search_number) {
 	}
 		
 }
-int linear_search(int dizi[], int n, int search_number) {
+int linear_search(int dizi[], int n, int search_number) {O(n)
 	for (int i = 0; i < n; i++)
 	{
 		if (dizi[i] == search_number) {
