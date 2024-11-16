@@ -35,7 +35,7 @@ int main(){
     return 0;
 }
 
-void sort(int a[],int b){
+void sort(int a[],int b){O(n2)
     for (int i = 0; i < b-1; i++)
     {
         for (int j = i+1 ; j < b; j++)//bulunduğu yerin üstlerinde aramalı
@@ -86,7 +86,7 @@ int main(){
     return 0;
 }
 
-void sort(int a[],int b,int c){
+void sort(int a[],int b,int c){O(n2)
     if (b>=c)
     {
         return ;
