@@ -30,7 +30,7 @@ void empty_list_maker() {
 }
 void reverse_list(int* first) {//ilkinden başlayarak her bir pre ve next i değiştir first de bu sırada eklenerek değişir
 	int current = *first;
-	int temp = EMPTY;
+	int temp = EMPTY;//0 da diyebilirsin
 
 	while (current != EMPTY) {
 		// current düğümün next ve prev işaretçilerini değiştir
