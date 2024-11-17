@@ -317,7 +317,7 @@ int get_item(int* r) {
     }
 }
 int compare(int a, int b) {
-    if (a<b)
+    if (a<b)//küçük olursa küçükten büyüğe sıralar
     {
         return True;
     }
