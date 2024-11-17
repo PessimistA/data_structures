@@ -15,7 +15,8 @@ void push(char value[]) {
     if (top < (MAX - 1)) {
         top++;
         strcpy(stack[top], value);
-    } else {
+    }
+    else {
         printf("Stack Overflow\n");
     }
 }
@@ -36,7 +37,7 @@ int isOperand(char ch) {
 // Postfix'ten Prefix'e dönüşüm fonksiyonu
 void postfixToPrefix(char* postfix, char* prefix) {
     int len = strlen(postfix);
-    
+
     // Postfix ifadesini sağdan sola doğru okuma
     for (int i = 0; i < len; i++) {
         char ch = postfix[i];
@@ -45,18 +46,18 @@ void postfixToPrefix(char* postfix, char* prefix) {
             // Operand: Yığına ekle
             char operand[2] = { ch, '\0' };
             push(operand);
-        } else {
+        }
+        else {
             // Operatör: Yığına iki operand al
             char op1[MAX], op2[MAX];
             pop(op1); // Birinci operand
             pop(op2); // İkinci operand
 
             // Operatörü ve iki operand'ı Prefix formatında birleştir
-            char newexp[MAX];
-            newexp[0] = ch; // Operatörü ekle
-            newexp[1] = '\0';
+            char newexp[MAX]="";
+            strncat(newexp, &ch, 1);
             strcat(newexp, op2); // İkinci operand
-            strcat(newexp, op1); // Birinci operand
+            strcat(newexp, op1);// Birinci operand
             push(newexp); // Yeni ifadenin yığına eklenmesi
         }
     }
