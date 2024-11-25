@@ -12,19 +12,19 @@ node* head=NULL;
 node* tail= NULL;
 node* temp;
 void insert_item(int item) {
-	struct node* temp = (node*)malloc(sizeof(node));
+	struct node* temp = (node*)malloc(sizeof(node));//temp tüm iki kutucuğu ifade eder
 
-	temp->number = item;
-	temp->next = NULL;
+	temp->number = item;//yeni elemanı ekler
+	temp->next = NULL;//bu yeni eklenmiş elemanın next null yapar yeni eleman eklenene kadar
 
 	if (head==NULL)
 	{
-		head = temp;
+		head = temp;//başlangıç durumudur head e ekleme bir kez yapılır
 		tail = temp;
 	}
 	else
 	{
-		tail->next = temp;
+		tail->next = temp;//son elemanın bulunduğu konumu gösterir 
 		tail = temp;
 	}
 }
