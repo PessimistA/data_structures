@@ -24,8 +24,8 @@ void insert_item(int item) {
 	}
 	else
 	{
-		tail->next = temp;//son elemanın bulunduğu konumu gösterir 
-		tail = temp;
+		tail->next = temp;/tailin sonraki elemanını temp olarak ayarla atama işlemi yaparız yani burada
+		tail = temp;//temp düğümünün adresini taile atar düğümü kopyalamaz sadece adres
 	}
 }
 void free_list() {
