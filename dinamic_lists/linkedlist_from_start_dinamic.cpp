@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS // Visual Studio kullan�yorsan�z bu sat�r gereklidir.
+#define _CRT_SECURE_NO_WARNINGS // Visual Studio kullanýyorsanýz bu satýr gereklidir.
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -11,10 +11,10 @@ struct node {
 node* head = NULL;
 node* temp;
 void insert_item(int item) {
-	struct node* temp = (node*)malloc(sizeof(node));
+	struct node* temp = (node*)malloc(sizeof(node));//temp şu anki düğümüm
 	temp->number = item;
-	temp->next = head;
-	head = temp;
+	temp->next = head;//geriye sarıyormuş gibi düşün sola doğru eklenir ama sola eklediğinin nexti sağı gösterir
+	head = temp;//yeni head değerini atama
 
 }
 void free_list() {
