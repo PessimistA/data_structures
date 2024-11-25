@@ -24,8 +24,8 @@ void insert_item(int item) {
 	}
 	else
 	{
-		tail->next = temp;/tailin sonraki elemanını temp olarak ayarla atama işlemi yaparız yani burada
-		tail = temp;//temp düğümünün adresini taile atar düğümü kopyalamaz sadece adres
+		tail->next = temp;//mevcut listenin son elemanının yeni adresimize yöneldirecek şekilde güncelleriz
+		tail = temp;//mevcut listeyi güncelleriz temp burada yeni elemandır zaten kendi içinde sonraki elemanı null değeri atanmıştır
 	}
 }
 void free_list() {
@@ -37,7 +37,7 @@ void free_list() {
 	}
 }
 void print() {
-	struct node* head1 = head;
+	struct node* head1 = head;//bu ilk elemanı gösterir atama yapınca head 1 de orayı gösteriyor o elemanın  nexti sonuçta sonraki elemanı gösterir 
 	printf("list: ");
 	while (head1 != NULL) {
 		printf("%d\t", head1->number);
