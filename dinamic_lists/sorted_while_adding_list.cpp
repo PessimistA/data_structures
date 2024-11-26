@@ -36,8 +36,8 @@ void insert_at_position(struct node** head,struct node** tail, int item) {
             current = current->next;
         }
 
-        temp->next = current->next;
-        current->next = temp;
+        temp->next = current->next;//şu anda eklenilenin next adresi yerini aldığının next adresi olur
+        current->next = temp;//yerine koyduğumuzda yeni eklediğimizi gösterir 
     }
 }
 
