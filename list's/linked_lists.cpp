@@ -45,21 +45,21 @@ void return_item(int r) {
 void insert_item(const char name[], int* list)//liste bağlı listenin başını point eden bir pointer
 {//O(N)
 	int r, q, p;
-	if (get_item(&r)) {//yeni free değeri ve hala free olan kutunun indexi r olarak verilir
+	if (get_item(&r)) {//şu anda kullanılan index döner
 		strcpy(linkedlist[r].name, name);
 		q = EMPTY;
 		p = *list;//listenin başlangıç noktasu yani FİRST
-		while (p != EMPTY && strcmp(linkedlist[p].name, name) < 0) { //compare yapılır a dan z ye olacak şekilde//büyükyüt olursa z den a ya sıralar
-			q = p;//q yani -1 e eleman eklenir burada listenin son boş kısmı atılır 
-			p = linkedlist[p].link;//free gibi yeni yer değeri atanır
+		while (p != EMPTY && strcmp(linkedlist[p].name, name) < 0) { //compare yapılır a dan z ye olacak şekilde//büyükyüt olursa z den a ya sıralar(bu kısımda koyulacağı yerin bir önceki index bulunur )
+			q = p;//q yani -1 e eleman eklenir burada listenin son boş kısmı atılır (bu bulunan index q ya atanır)
+			p = linkedlist[p].link;//free gibi yeni yer değeri atanır(bir sonraki elemana geçme işlemi ki hangi eleman yukarıda kıyaslanmada doğru çıkacaksa o bulunur)(en son p değeri koyulacağı yerin sonraki üyesidir)
 		}
 		if (q == EMPTY) { //front değeri atanır //q null olması gerekir çünkü üstteki while bunu kontrol eder öbür türlü boş kalır q
-			*list = r;//dönen r değerinmi listenin başlangıcına göre atar
-			linkedlist[r].link = p;
+			*list = r;//dönen r değerinmi listenin başlangıcına atar
+			linkedlist[r].link = p;//(şu ankinin sonraki linki p olur yukarıda tek tek denerken p sonraki elemena gelince durmuştu)
 		}
 		else { //listenin ortasına atama uapar
-			linkedlist[q].link = r;
-			linkedlist[r].link = p;
+			linkedlist[q].link = r;//önceki elemanın linki şimdiki elemanı gösterir
+			linkedlist[r].link = p;//yukarıdaki ile aynı 
 		}
 	}
 	else printf("\n not enough free space!!");
@@ -81,8 +81,8 @@ void delete_item(char name[], int* list)
 		return_item(p);
 	}
 	else { //get the item pointed by ‘p’
-		linkedlist[q].link = linkedlist[p].link;
-		return_item(p);
+		linkedlist[q].link = linkedlist[p].link;//burada p şu anda bulunduğun nokta oluyor p nin sonraki elemanın öncekinin linkine bağlıyorsun
+		return_item(p);//p yani şu anda  burada bulunduğun itemi free yaparsın
 	}
 }
 void print() {
