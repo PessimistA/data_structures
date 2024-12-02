@@ -127,3 +127,95 @@ int main() {
 
     return 0;
 }
+//ikisi de dinamic olan sistem
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// İç listelerde kullanılacak düğüm yapısı
+struct inner_node {
+    int data;
+    struct inner_node* next;
+};
+
+// Ana listede kullanılacak düğüm yapısı
+struct master_node {
+    struct inner_node* inner_head; // İç listenin başını tutan pointer
+    struct master_node* next;
+};
+
+// İç listeye eleman ekleyen fonksiyon
+void insert_inner(struct inner_node** head, int value) {
+    struct inner_node* temp = (struct inner_node*)malloc(sizeof(struct inner_node));
+    temp->data = value;
+    temp->next = NULL;
+
+    if (*head == NULL) {
+        *head = temp;
+    } else {
+        struct inner_node* current = *head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = temp;
+    }
+}
+
+// Ana listeye, iç listenin head pointer'ını ekleyen fonksiyon
+void insert_master(struct master_node** master_head, struct inner_node* inner_head) {
+    struct master_node* temp = (struct master_node*)malloc(sizeof(struct master_node));
+    temp->inner_head = inner_head;
+    temp->next = NULL;
+
+    if (*master_head == NULL) {
+        *master_head = temp;
+    } else {
+        struct master_node* current = *master_head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = temp;
+    }
+}
+
+// Ana listeyi ve iç listeleri yazdıran fonksiyon
+void print_master_list(struct master_node* master_head) {
+    struct master_node* current_master = master_head;
+
+    int list_number = 1;
+    while (current_master != NULL) {
+        printf("List %d: ", list_number++);
+        struct inner_node* current_inner = current_master->inner_head;
+
+        while (current_inner != NULL) {
+            printf("%d -> ", current_inner->data);
+            current_inner = current_inner->next;
+        }
+        printf("NULL\n");
+        current_master = current_master->next;
+    }
+}
+
+int main() {
+    struct master_node* master_head = NULL;
+
+    // İç listelerden biri
+    struct inner_node* inner_list1 = NULL;
+    insert_inner(&inner_list1, 1);
+    insert_inner(&inner_list1, 2);
+    insert_inner(&inner_list1, 3);
+
+    // İç listelerden diğeri
+    struct inner_node* inner_list2 = NULL;
+    insert_inner(&inner_list2, 10);
+    insert_inner(&inner_list2, 20);
+
+    // Ana listeye iç listelerin head pointer'larını ekle
+    insert_master(&master_head, inner_list1);
+    insert_master(&master_head, inner_list2);
+
+    // Sonuçları yazdır
+    print_master_list(master_head);
+
+    return 0;
+}
