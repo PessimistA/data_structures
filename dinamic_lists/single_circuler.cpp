@@ -142,3 +142,118 @@ int main() {
 
     return 0;
 }
+//ver 2
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int katsayı;      // Polinom katsayısı
+    int exponen;      // Polinom üssü
+    struct node* next; // Bir sonraki düğüme işaretçi
+};
+
+// Circular linked list'e yeni eleman ekler
+void insert_item(struct node** head, int katsayı, int exponen) {
+    struct node* temp = (struct node*)malloc(sizeof(struct node)); // Yeni bir düğüm oluştur
+    temp->katsayı = katsayı;
+    temp->exponen = exponen;
+    temp->next = *head;
+
+    if (*head == NULL) {
+        *head = temp; // Eğer liste boşsa, head'i bu eleman yap
+    } else {
+        struct node* current = *head;
+        // Liste sonuna kadar git
+        while (current->next != *head) {
+            current = current->next;
+        }
+        current->next = temp; // Son elemanın next'ini yeni eleman yap
+    }
+}
+
+// İki polinomu toplar ve sonucu head3'te saklar
+void addition(struct node** head1, struct node** head2, struct node** head3) {
+    struct node* p1 = *head1;
+    struct node* p2 = *head2;
+
+    // Polinomları toplarken aynı üsleri kontrol ederiz
+    do {
+        switch (p1->exponen - p2->exponen) {
+            case 0:
+                // Aynı üssü olan terimler, katsayıları toplanır
+                insert_item(head3, p1->katsayı + p2->katsayı, p1->exponen);
+                p1 = p1->next;
+                p2 = p2->next;
+                break;
+            case 1:
+                // p1'in üssü büyükse, p1'i ekleriz
+                insert_item(head3, p1->katsayı, p1->exponen);
+                p1 = p1->next;
+                break;
+            case -1:
+                // p2'nin üssü büyükse, p2'yi ekleriz
+                insert_item(head3, p2->katsayı, p2->exponen);
+                p2 = p2->next;
+                break;
+        }
+    } while (p1 != *head && p2 != *head); // Her iki polinomda da eleman olduğu sürece devam et
+
+    // Kalan elemanları ekleyelim
+    while (p1 != *head) {
+        insert_item(head3, p1->katsayı, p1->exponen);
+        p1 = p1->next;
+    }
+    while (p2 != *head) {
+        insert_item(head3, p2->katsayı, p2->exponen);
+        p2 = p2->next;
+    }
+}
+
+// Circular linked list'teki tüm elemanları yazdırır
+void print(struct node* head) {
+    if (head == NULL) {
+        printf("Liste boş\n");
+        return;
+    }
+
+    struct node* current = head;
+    do {
+        printf("%dx^%d ", current->katsayı, current->exponen);
+        current = current->next;
+    } while (current != head); // Liste başına dönene kadar yazdır
+    printf("\n");
+}
+
+int main() {
+    struct node* poly1 = NULL;
+    struct node* poly2 = NULL;
+    struct node* result = NULL;
+
+    // Polinom 1: 6x^3 + 15x^4 + 30x^5 + 40x^6
+    insert_item(&poly1, 6, 3);
+    insert_item(&poly1, 15, 4);
+    insert_item(&poly1, 30, 5);
+    insert_item(&poly1, 40, 6);
+
+    // Polinom 2: 7x^3 + 16x^4 + 31x^1 + 42x^0
+    insert_item(&poly2, 7, 3);
+    insert_item(&poly2, 16, 4);
+    insert_item(&poly2, 31, 1);
+    insert_item(&poly2, 42, 0);
+
+    // Polinomları ekleyelim
+    printf("Polinom 1: ");
+    print(poly1);
+
+    printf("Polinom 2: ");
+    print(poly2);
+
+    // Polinomları topla
+    addition(&poly1, &poly2, &result);
+
+    // Sonucu yazdıralım
+    printf("Toplanan Polinom: ");
+    print(result);
+
+    return 0;
+}
