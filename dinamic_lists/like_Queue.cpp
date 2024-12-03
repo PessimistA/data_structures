@@ -33,8 +33,7 @@ void insert_at_position(struct node** head, struct node** tail, int item) {
     }
 }
 void Delete(struct node** head) {
-	struct node* temp2 = (*head);
-	(*head) = temp2->next;
+	(*head) = (*head)->next;
 }
 
 void free_list(struct node** head) {
