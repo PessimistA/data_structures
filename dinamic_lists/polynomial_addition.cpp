@@ -284,3 +284,151 @@ int main() {
 
     return 0;
 }
+
+//teacher version
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct poly_node* poly_pointer;
+
+typedef struct poly_node {
+    int coef;          // Katsayı
+    int expon;         // Üs
+    poly_pointer link; // Sonraki düğümün adresi
+} poly_node;
+
+// Bellek kontrol makrosu
+#define IS_FULL(ptr) (!(ptr))
+
+// Üs karşılaştırma fonksiyonu
+int COMPARE(int a, int b) {
+    if (a < b) return -1;
+    if (a == b) return 0;
+    return 1;
+}
+
+// Yeni düğüm ekleme fonksiyonu
+void attach(int coefficient, int exponent, poly_pointer* rear) {
+    poly_pointer temp = (poly_pointer)malloc(sizeof(poly_node));
+    if (IS_FULL(temp)) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(1);
+    }
+    temp->coef = coefficient;
+    temp->expon = exponent;
+    temp->link = NULL;
+    (*rear)->link = temp;
+    *rear = temp;
+}
+
+// Polinom yazdırma fonksiyonu
+void print_poly(poly_pointer p) {
+    while (p != NULL) {
+        printf("%dx^%d", p->coef, p->expon);
+        p = p->link;
+        if (p != NULL) {
+            printf(" + ");
+        }
+    }
+    printf("\n");
+}
+
+// Polinom toplama fonksiyonu
+poly_pointer add_poly(poly_pointer a, poly_pointer b) {
+    poly_pointer front, rear, temp;
+    int sum;
+
+    rear = (poly_pointer)malloc(sizeof(poly_node));
+    if (IS_FULL(rear)) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(1);
+    }
+
+    front = rear;
+
+    while (a && b) {
+        switch (COMPARE(a->expon, b->expon)) {
+            case -1:  // a'nın üssü küçük
+                attach(b->coef, b->expon, &rear);
+                b = b->link;
+                break;
+            case 0:  // Üsler eşit
+                sum = a->coef + b->coef;
+                if (sum) attach(sum, a->expon, &rear);
+                a = a->link;
+                b = b->link;
+                break;
+            case 1:  // a'nın üssü büyük
+                attach(a->coef, a->expon, &rear);
+                a = a->link;
+                break;
+        }
+    }
+
+    // Geri kalan elemanları ekle
+    while (a) {
+        attach(a->coef, a->expon, &rear);
+        a = a->link;
+    }
+    while (b) {
+        attach(b->coef, b->expon, &rear);
+        b = b->link;
+    }
+
+    rear->link = NULL;
+
+    temp = front;
+    front = front->link;
+    free(temp);
+
+    return front;
+}
+
+// Belleği serbest bırakma fonksiyonu
+void free_poly(poly_pointer p) {
+    poly_pointer temp;
+    while (p != NULL) {
+        temp = p;
+        p = p->link;
+        free(temp);
+    }
+}
+
+int main() {
+    // İlk polinom: 3x^3 + 2x^2 + 1
+    poly_pointer a = (poly_pointer)malloc(sizeof(poly_node));
+    a->coef = 3;
+    a->expon = 3;
+    a->link = NULL;
+    poly_pointer temp_a = a;
+    attach(2, 2, &temp_a);
+    attach(1, 0, &temp_a);
+
+    // İkinci polinom: 4x^3 + 3x + 5
+    poly_pointer b = (poly_pointer)malloc(sizeof(poly_node));
+    b->coef = 4;
+    b->expon = 3;
+    b->link = NULL;
+    poly_pointer temp_b = b;
+    attach(3, 1, &temp_b);
+    attach(5, 0, &temp_b);
+
+    printf("Polinom 1: ");
+    print_poly(a);
+
+    printf("Polinom 2: ");
+    print_poly(b);
+
+    // Polinomları topla
+    poly_pointer result = add_poly(a, b);
+    printf("Toplam: ");
+    print_poly(result);
+
+    // Belleği serbest bırak
+    free_poly(a);
+    free_poly(b);
+    free_poly(result);
+
+    return 0;
+}
