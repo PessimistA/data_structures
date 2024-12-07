@@ -63,3 +63,65 @@ int main() {
 
     return 0;
 }
+
+//queue doğru versiyonu
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+	int item;
+	node* next;
+};
+struct node* rear  = NULL;
+struct node* front = NULL;
+
+void enqueue(int item) {
+	node* temp = (node*)malloc(sizeof(node));
+	temp->item = item;
+	temp->next = NULL;
+	if (front==NULL)
+	{
+		front = temp;
+		rear = temp;
+	}
+	else
+	{
+		rear->next =temp ;
+		rear = temp;
+	}
+}
+void pop() {
+	if (rear==NULL)
+	{
+		printf("stack is empty\n");
+	}
+	front = front->next;	
+}
+void print() {
+	node* current = front;
+	printf("list: ");
+	while (current != NULL) {
+		printf("%d -> ", current->item);
+		current = current->next;
+	}
+	printf("NULL\n");
+}
+void free_list() {
+	struct node* temp;
+	while (front != NULL) {
+		temp = front;
+		front = (front)->next;
+		free(temp);
+	}
+}
+int main() {
+	enqueue(2);
+	enqueue(4);
+	enqueue(6);
+	enqueue(8);
+	print();
+	pop();
+	print();
+	free_list();
+}
+
