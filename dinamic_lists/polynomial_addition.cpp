@@ -432,3 +432,116 @@ int main() {
 
     return 0;
 }
+
+//multiple top version
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node {
+	int value;         
+	int exponen;         
+	struct node* next;   
+} node;
+
+typedef struct node* pointer_front; 
+
+
+pointer_front top[10] = { NULL }; 
+
+// Listeye düğüm ekleme (sondan ekleme)
+void insert(pointer_front* head, int value, int exponen) {
+	pointer_front temp = (node*)malloc(sizeof(node)); 
+	temp->value = value;
+	temp->exponen = exponen;
+	temp->next = NULL;
+
+	if (*head == NULL) {
+		*head = temp;
+	}
+	else { 
+		pointer_front current = *head;
+		while (current->next != NULL) { 
+			current = current->next;
+		}
+		current->next = temp; 
+	}
+}
+int compare(int exponen1,int exponen2) {
+	if (exponen1>exponen2)
+	{
+		return 1;
+	}
+	else if (exponen1==exponen2)
+	{
+		return 0;
+	}
+	else if (exponen1 < exponen2)
+	{
+		return -1;
+	}
+}
+void addition(pointer_front* head1, pointer_front* head2,pointer_front* head3) {
+	pointer_front temp1 = *head1;
+	pointer_front temp2 = *head2;
+
+	while (temp1 != NULL && temp2 != NULL) {
+		switch (compare(temp1->exponen, temp2->exponen)) {
+		case 1: 
+			insert(head3, temp1->value, temp1->exponen);
+			temp1 = temp1->next;
+			break;
+		case -1: 
+			insert(head3, temp2->value, temp2->exponen);
+			temp2 = temp2->next;
+			break;
+		case 0: 
+			insert(head3, temp1->value + temp2->value, temp1->exponen);
+			temp1 = temp1->next;
+			temp2 = temp2->next;
+			break;
+		}
+	}
+	while (temp1 != NULL) {
+		insert(head3, temp1->value, temp1->exponen);
+		temp1 = temp1->next;
+	}
+
+	while (temp2 != NULL) {
+		insert(head3, temp2->value, temp2->exponen);
+		temp2 = temp2->next;
+	}
+}
+void print(pointer_front* head) {
+	pointer_front current = *head;
+	printf("list: ");
+	while (current != NULL) {
+		printf("%d-%d -> ", current->value,current->exponen);
+		current = current->next;
+	}
+	printf("NULL\n");
+}
+
+int main() {
+
+	insert(&top[0], 2, 6);
+	insert(&top[0], 2, 5);
+	insert(&top[0], 2, 4);
+	insert(&top[0], 2, 3);
+
+	insert(&top[1], 2, 6);
+	insert(&top[1], 2, 4);
+	insert(&top[1], 2, 3);
+	insert(&top[1], 2, 1);
+
+	printf("first one ");
+	print(&top[0]);
+
+	printf("Second one: ");
+	print(&top[1]);
+
+	// Polinomları topla
+	addition(&top[0], &top[1], &top[2]);
+	printf("last one ");
+	print(&top[2]);
+	return 0;
+}
