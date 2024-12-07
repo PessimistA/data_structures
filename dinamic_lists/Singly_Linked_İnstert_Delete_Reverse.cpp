@@ -117,3 +117,107 @@ int main() {
 	free_list(&head2);
 
 }
+//n'th position added / deleting / reversing /
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+	int item;
+	node* next;
+};
+
+void insert_to_right(node** head, int item,int n) {
+	node* temp = (node*)malloc(sizeof(node));
+	temp->item = item;	
+	temp->next = NULL;
+	if (n==1)
+	{
+		temp->next = *head;
+		*head = temp;
+		return;
+	}
+	else
+	{
+		node* current = *head;
+		for (int i = 0; i < n-2; i++)
+		{
+			current = current->next;
+		}
+		temp->next = current->next;//temp yeni eklediğin current eskiden orada olan onun sonrasında olan elemana bağlaman gerekir
+		current->next = temp;
+		
+	}
+}
+void delete_to_right(node** head,int n) {
+	if (n==1)
+	{
+		*head = (*head)->next;
+		return;
+	}
+	node* current = *head;
+	for (int i = 0; i < n - 2; i++)
+	{
+		current = current->next;
+	}
+	current->next= current->next->next;
+	
+}
+void reverse_recursive(node* head) {
+	if (head==NULL)
+	{
+		return;
+	}
+	reverse_recursive((head)->next);
+	printf("%d -> ", head->item);
+}
+struct node* reverse_iterative(node* head) {
+	node* current = head;
+	node* prev = NULL;
+	node* next = NULL;
+	while (current != NULL) {
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	return prev;
+}
+
+
+void print(node** head) {
+	node* current = *head;
+	printf("list: ");
+	while (current != NULL) {
+		printf("%d -> ", current->item);
+		current = current->next;
+	}
+	printf("NULL\n");
+}
+void free_list(struct node** head) {
+	struct node* temp;
+	while (*head != NULL) {
+		temp = *head;
+		*head = (*head)->next;
+		free(temp);
+	}
+}
+int main() {
+	node* head2 = NULL;
+
+	printf("ikinci olan\n");
+	insert_to_right(&head2, 1,1);
+	insert_to_right(&head2, 2,2);
+	insert_to_right(&head2, 3,3);
+	insert_to_right(&head2, 4,2);
+	printf("\n");
+	print(&head2);
+	delete_to_right(&head2,1);
+	print(&head2);
+	printf("\n");
+	reverse_recursive(head2);
+	printf("\n");
+	
+	free_list(&head2);
+
+}
