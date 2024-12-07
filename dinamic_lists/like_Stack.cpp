@@ -54,3 +54,55 @@ int main() {
 
     return 0;
 }
+//stack olarak
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+	int item;
+	node* next;
+};
+struct node* top=NULL;
+
+void push(int item) {
+	node* temp = (node*)malloc(sizeof(node));
+	temp->item = item;	
+	temp->next = top;
+	top = temp;
+}
+void pop() {
+	if (top==NULL)
+	{
+		printf("stack is empty\n");
+	}
+	top = top->next;	
+}
+void print() {
+	node* current = top;
+	printf("list: ");
+	while (current != NULL) {
+		printf("%d -> ", current->item);
+		current = current->next;
+	}
+	printf("NULL\n");
+}
+void free_list() {
+	struct node* temp;
+	while (top != NULL) {
+		temp = top;
+		top = (top)->next;
+		free(temp);
+	}
+}
+int main() {
+	push(2);
+	push(4);
+	push(6);
+	push(8);
+	print();
+	pop();
+	print();
+	free_list();
+}
+
+
