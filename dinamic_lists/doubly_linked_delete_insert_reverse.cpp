@@ -39,22 +39,59 @@ void insert_from_right(node** head, int value) {
 	current->next = temp;
 	current = temp;
 }
-void recursive(node** head) {
+void insert_nLocation_(node** head, int value,int location) {
+	node* temp = (node*)malloc(sizeof(node));
+	node* current = *head;
+	temp->value = value;
+
+	if (*head==NULL)
+	{
+		temp->next = *head;
+		*head = temp;
+		(*head)->prev = NULL;
+		//temp->prev = *head;
+		return;
+	}
+	for (int i = 0; i < location - 2;i++) {
+		current = current->next;
+	}
+	temp->prev = current;
+	if (current->next != NULL)
+		current->next->prev = temp;
+	temp->next = current->next;
+	current->next = temp;
+
 
 }
-void iterative(node** head) {
+struct node* recursive(node* current) {
+	if (current == NULL || current->next == NULL) {
+		return current; // Base case
+	}
+
+	// Recursive çağrı
+	struct node* new_head = recursive(current->next);
+
+	// Bağlantıları ters çevir
+	current->next->next = current;
+	current->prev = current->next;
+	current->next = NULL;
+
+	return new_head;
+}
+struct node* iterative(node** head) {
 	node* current = *head;
 	node* temp = NULL;
 	while (current != NULL) {
-		temp = current->next;
-		current->next = current->prev;
-		current->prev = temp;
-		current = current->next;
+		temp = current->prev;
+		current->prev = current->next;
+		current->next = temp;
+		current = current->prev;
 	}
-	if (current==NULL)
+	if (temp != NULL)
 	{
 		*head = temp->prev;
 	}
+	return *head;
 }
 void delete_from_beginning(node** head) {
 	*head = (*head)->next;
@@ -66,6 +103,26 @@ void delete_from_last(node** head) {
 	}
 	 current->next=NULL;
 }
+void delete_nLocation(node** head,int location) {
+	node* current = *head;
+	if (location==1)
+	{
+		(*head)->next->prev = NULL;
+		*head = (*head)->next;
+		return;
+	}
+		for (int i = 0; i < location - 1; i++) {
+			current = current->next;
+		}
+		if (current->prev != NULL) {
+			current->prev->next = current->next;
+		}
+		if (current->next != NULL) {
+			current->next->prev = current->prev;
+		}
+	
+
+}
 
 void print(node** head) {
 	node* current1 = *head;
@@ -75,17 +132,17 @@ void print(node** head) {
 		current1 = current1->next;
 	}
 	printf("NULL\n");
-	printf("\n");
-	node* current = *head;
-	while (current->next != NULL) {
-		current = current->next;
-	}
-	printf("list reverse: ");
-	while (current!=NULL) {
-		printf("%d -> ", current->value);
-		current = current->prev;
-	}
-	printf("NULL\n");
+	//printf("\n");
+	//node* current = *head;
+	//while (current->next != NULL) {
+	//	current = current->next;
+	//}
+	//printf("list reverse: ");
+	//while (current!=NULL) {
+	//	printf("%d -> ", current->value);
+	//	current = current->prev;
+	//}
+	//printf("NULL\n");
 }
 
 int main() {
@@ -102,7 +159,21 @@ int main() {
 	insert_from_right(&head2, 3);
 	insert_from_right(&head2, 7);
 	insert_from_right(&head2, 8);
-	delete_from_last(&head2);
+	//delete_from_last(&head2);
 	print(&head2);
+	head2= iterative(&head2);
+	//head2 = recursive(head2);
+	print(&head2);
+
+	printf("ucuncu\n");
+	node* head3 = NULL;
+	insert_nLocation_(&head3, 1, 1);
+	insert_nLocation_(&head3, 2, 2);
+	insert_nLocation_(&head3, 3, 3);
+	insert_nLocation_(&head3, 4, 2);
+	print(&head3);
+	delete_nLocation(&head3, 4);
+	print(&head3);
+
 	return 0;
 }
