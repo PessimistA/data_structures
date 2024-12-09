@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Düðüm yapýsý
+
 typedef struct Node {
     int data;
     struct Node* left;
     struct Node* right;
 } Node;
 
-// Yeni düðüm oluþturma fonksiyonu
+
 Node* createNode(int data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
     newNode->data = data;
@@ -52,22 +52,22 @@ Node* findMin(Node* root) {
     while (root && root->left != NULL) {
         root = root->left;
     }
-    return root;//en soldaki eleman en küçük olandýr sonuçta
+    return root;
 }
 
-// Aðaçtan eleman silme
+
 Node* deleteNode(Node* root, int data) {
     if (root == NULL) {
         return root;
     }
     if (data < root->data) {
-        root->left = deleteNode(root->left, data);//küçükse sol tarafta kalýr
+        root->left = deleteNode(root->left, data);
     }
-    else if (data > root->data) {//büyükse sað tarafta kalýr
+    else if (data > root->data) {
         root->right = deleteNode(root->right, data);
     }
     else {
-        // Tek çocuk veya çocuksuz durum
+        // 
         if (root->left == NULL) {
             Node* temp = root->right;
             free(root);
@@ -78,7 +78,7 @@ Node* deleteNode(Node* root, int data) {
             free(root);
             return temp;
         }
-        // Ýki çocuklu durum
+        // 
         Node* temp = findMin(root->right);
         root->data = temp->data;
         root->right = deleteNode(root->right, temp->data);
@@ -86,7 +86,7 @@ Node* deleteNode(Node* root, int data) {
     return root;
 }
 
-// Aðacý sýrayla yazdýrma (inorder traversal)
+
 void inorder(Node* root) {
     if (root != NULL) {
         inorder(root->left);
@@ -96,17 +96,17 @@ void inorder(Node* root) {
 }
 void preorder(Node* root) {
     if (root != NULL) {
-        printf("%d ", root->data);  // Kök
+        printf("%d ", root->data);  // KÃ¶k
         preorder(root->left);      // Sol
-        preorder(root->right);     // Sað
+        preorder(root->right);     // SaÃ°
     }
 }
 
 void postorder(Node* root) {
     if (root != NULL) {
         postorder(root->left);     // Sol
-        postorder(root->right);    // Sað
-        printf("%d ", root->data); // Kök
+        postorder(root->right);    // SaÃ°
+        printf("%d ", root->data); // KÃ¶k
     }
 }
 
@@ -114,7 +114,7 @@ void postorder(Node* root) {
 int main() {
     Node* root = NULL;
 
-    // Aðaç oluþturma ve eleman ekleme
+
     root = insert(root, 50);
     root = insert(root, 30);
     root = insert(root, 20);
@@ -127,7 +127,6 @@ int main() {
     inorder(root);
     printf("\n");
 
-    // Eleman silme
     printf("Deleting 20...\n");
     root = deleteNode(root, 20);
     printf("Inorder traversal after deletion: ");
@@ -142,7 +141,7 @@ int main() {
     postorder(root);
     printf("\n");
 
-    printf("40 sayýsýnýn yerini döndüren\n");
+    printf("40 sayÄ±sÄ±nÄ±n yerini dÃ¶ndÃ¼ren\n");
     Node* position = search(40, root);
     printf("%d", position);
 
