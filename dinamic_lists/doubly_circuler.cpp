@@ -355,6 +355,47 @@ void addition(node_pointer* head1, node_pointer* head2, node_pointer* head3) {
         }
     }
 }
+void delete_item(node_pointer* head, int katsayı, int exponen) {
+    if (*head == NULL) {
+        printf("Liste boş, silinecek eleman yok.\n");
+        return;
+    }
+
+    node_pointer current = *head;
+    node_pointer to_delete = NULL;
+
+    // Listeyi dolaşarak silinecek düğümü bul
+    do {
+        if (current->katsayı == katsayı && current->exponen == exponen) {
+            to_delete = current;
+            break;
+        }
+        current = current->rightlink;
+    } while (current != *head);
+
+    if (to_delete == NULL) {
+        printf("Eleman bulunamadı: %dx^%d\n", katsayı, exponen);
+        return;
+    }
+
+    // Eğer listede tek eleman varsa
+    if (to_delete->rightlink == to_delete && to_delete->leftlink == to_delete) {
+        *head = NULL;
+    }
+    else {
+        // Bağlantıları güncelle
+        to_delete->leftlink->rightlink = to_delete->rightlink;
+        to_delete->rightlink->leftlink = to_delete->leftlink;
+
+        // Eğer silinen eleman baş düğümse, baş düğümü güncelle
+        if (to_delete == *head) {
+            *head = to_delete->rightlink;
+        }
+    }
+
+    free(to_delete); // Belleği serbest bırak
+    printf("Eleman silindi: %dx^%d\n", katsayı, exponen);
+}
 // Listeyi yazdırma fonksiyonu
 void print(node_pointer* head) {
     if (*head == NULL) return;
@@ -408,7 +449,8 @@ int main() {
     // Toplanan polinomu yazdır
     printf("Toplanan Polinom: ");
     print(&head3);
-
+    delete_item(&head3, 10, 6);
+    print(&head3);
     // Belleği serbest bırak
     free_list(&head1);
     free_list(&head2);
