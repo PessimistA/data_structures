@@ -256,6 +256,20 @@ void level_printt(node* root,int level) {
         level_printt(root->right, level - 1); // Sağ alt ağacı işle
     }
 }
+int level_item_count(node* root, int level) {
+    if (root == NULL) {
+        return 0;
+    }
+    if (level == 1) {
+        return 1;  // Bu seviyedeki düğümü yazdır
+    }
+    else if (level > 1) {
+        int left_count = level_item_count(root->left, level - 1);
+        int right_count = level_item_count(root->right, level - 1);
+        return left_count + right_count;
+    }
+    return 0;
+}
 void level_order(node* root) {
     int level = treeLevel(root);
     for (int i = 1; i <= level; i++)
@@ -299,16 +313,18 @@ int main() {
     root = insert(root, 70);
     root = insert(root, 60);
     root = insert(root, 80);
+    root = insert(root, 100);
+    root = insert(root, 90);
 
     printf("Inorder traversal: ");
     inorder(root);
     printf("\n");
 
-    printf("Deleting 20...\n");
-    root = deleteNode(root, 20);
-    printf("Inorder traversal after deletion: ");
-    inorder(root);
-    printf("\n");
+    //printf("Deleting 20...\n");
+    //root = deleteNode(root, 20);
+    //printf("Inorder traversal after deletion: ");
+    //inorder(root);
+    //printf("\n");
 
     printf("preorder:\n");
     preorder(root);
@@ -324,7 +340,14 @@ int main() {
 
     printf("40 sayısının yerini döndüren\n");
     node* position = search(40, root);
-    printf("%d", position);
+    printf("%d\n", position);
+
+
+    int level = treeLevel(root);
+    for (int i = 1; i <=level ; i++)
+    {
+        printf("leveldeki eleman sayisi %d\n", level_item_count(root, i));
+    }
 
     return 0;
 }
