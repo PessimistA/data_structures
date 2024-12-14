@@ -227,3 +227,97 @@ int main() {
 	free(transpose);
 	return 0;
 }
+
+//ver3
+#include <stdio.h>
+#include <stdlib.h>
+
+struct matrix1 {
+	int col;
+	int row;
+	int value;
+};
+int** matrix;
+matrix1* sparse;
+matrix1* sparse_transpose;
+
+
+void built_matrix1(int x) {
+    matrix = (int**)malloc(x * sizeof(int*));
+	for (int i = 0; i < x; i++)
+	{
+		matrix[i] = (int*)malloc(x * sizeof(int));
+	}
+	int eleman_sayısı = ((x*x)*0.4)+1;
+	sparse = (matrix1*)malloc(eleman_sayısı * sizeof(matrix1));
+	sparse_transpose = (matrix1*)malloc(eleman_sayısı * sizeof(matrix1));
+	for (int i = 0; i < x; i++)
+	{
+		for (int j = 0; j < x; j++) {
+			matrix[i][j] = 0;
+		}
+	}
+	int sayaç = eleman_sayısı;
+	while (sayaç>=0) {
+		int i1 = (rand() % x);
+		int j1 = (rand() % x);
+		int value = (rand() % 20) + 1;
+		matrix[i1][j1] = value;
+		sayaç--;
+	}
+	for (int i = 0; i < x; i++)
+	{
+		for (int j = 0; j < x; j++)
+		{
+			printf("%d  ", matrix[i][j]);
+		}
+		printf("\n");
+	}
+	int position=1;
+	int position2 = 1;
+	sparse[0].value=eleman_sayısı;
+	sparse[0].row = x;
+	sparse[0].col = x;
+	sparse_transpose[0].value = eleman_sayısı;
+	sparse_transpose[0].col = x;
+	sparse_transpose[0].row = x;
+	for (int i = 0; i < x; i++)
+	{
+		for (int j = 0; j < x; j++)
+		{
+			if (matrix[i][j]!=0)
+			{
+				sparse[position].value = matrix[i][j];
+				sparse[position].row = i;
+				sparse[position].col = j;
+				position++;
+			}
+			if (matrix[j][i] != 0)
+			{
+				sparse_transpose[position2].value = matrix[j][i];
+				sparse_transpose[position2].row = j;
+				sparse_transpose[position2].col = i;
+				position2++;
+			}
+		}
+	}
+	for (int i = 0; i < eleman_sayısı; i++)
+	{
+		printf("%d ", sparse[i].value);
+	}
+	printf("\n");
+	for (int i = 0; i < eleman_sayısı ; i++)
+	{
+		printf("%d ", sparse_transpose[i].value);
+	}
+	printf("\n");
+
+}
+
+
+int main() {
+	int x = 5;
+	built_matrix1(x);
+
+	return 0;
+}
