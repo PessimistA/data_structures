@@ -80,3 +80,89 @@ int main() {
 	print();
 	return 0;
 }
+//ver2
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#define Max 100
+int stack[Max];
+int queue2[Max];
+int top=-1;
+int rear = -1;
+int front = -1;
+void print() {
+	printf("\nstack");
+	for (int i = 0; i <= top; i++)
+	{
+		printf(" %d ", stack[i]);
+	}
+}
+int pop() {
+	return stack[top--];
+}
+void push(int item) {
+	stack[++top] = item;
+}
+void enqueue(int value) {
+	queue2[++rear] = value;
+}
+int dequeue() {
+	return queue2[front++] ;
+}
+void enqueueelement(int value, int n) {
+	int top1 = top;
+	for (int i = 0; i <= top1+1; i++)
+	{
+		enqueue(pop());
+	}
+	print();
+	int front1 = front;
+	int rear1 = rear;
+	int position = 0;
+	while (front<=rear) {
+		if (position==n)
+		{
+			push(value);
+			
+		}
+		push(dequeue());
+		position++;	
+	}
+}
+void dequeueelement( int n) {
+	int top1 = top;
+	for (int i = 0; i <= top1 + 1; i++)
+	{
+		enqueue(pop());
+	}
+	print();
+	int front1 = front;
+	int rear1 = rear;
+	int position = 0;
+	while (front <= rear) {
+		if (position == n)
+		{
+			front++;
+
+		}
+		push(dequeue());
+		position++;
+	}
+}
+
+int main() {
+	push(1);
+	push(2);
+	push(3);
+	push(4);
+	push(5);
+	push(6);
+	print();
+	enqueueelement(7, 2);
+	print();
+	dequeueelement(2);
+	print();
+	return 0;
+}
