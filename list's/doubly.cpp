@@ -49,18 +49,17 @@ void insert(char item[],int *head) {
 			*head = r;
 			linkedlist[r].prev = -1;
 			linkedlist[r].next = p;
-			if (p != EMPTY) { // Eğer liste boş değilse
-				linkedlist[p].prev = r;
-			}
+
+			linkedlist[p].prev = r;
+			
 		}
 		else
 		{
 			linkedlist[r].prev = q;
 			linkedlist[q].next = r;
 			linkedlist[r].next = p;
-			if (p != EMPTY) { // eğer sona eklenmiyorsa
-				linkedlist[p].prev = r;
-			}
+			linkedlist[p].prev = r;
+			
 		}
 
 	}
@@ -82,11 +81,14 @@ void Delete(char item[], int* head) {
 	if (q == -1)
 	{
 		*head = linkedlist[*head].next;
+		linkedlist[*head].prev = -1;
 		return_item(p);
 	}
 	else
 	{
 		linkedlist[q].next = linkedlist[p].next;
+		
+		linkedlist[linkedlist[p].next].prev = q;
 		return_item(p);
 	}
 }
@@ -99,46 +101,57 @@ void print(int* head) {
 		printf("%d\t%s\t%d\t%d\n", i, linkedlist[i].name, linkedlist[i].next,linkedlist[i].prev);
 	}
 	int sayaç = *head;//sıralı yazdıracak
-	printf("index\tname\tlink\n");
+	printf("index\tname\tlink\tprev\n");
 	while (sayaç != EMPTY) {
 		printf("%d\t%s\t%d\t%d\n", sayaç, linkedlist[sayaç].name, linkedlist[sayaç].next,linkedlist[sayaç].prev);
 		sayaç = linkedlist[sayaç].next;
 	}
-	printf("%d", FREE);
+	printf("FREE %d\n", FREE);
+	printf("First %d\n", *head);
 	printf("\n");
 }
-void print_reverse(int* head) {
-	int sayaç = *head;//sıralı yazdıracak
-	int last;
-	printf("index\tname\tnext\tprev\n");
-	while (sayaç != EMPTY) {
-		last = sayaç;
-		sayaç = linkedlist[sayaç].next;
+void reverse_iterative(int* head) {
+	int current = *head;
+	int temp = EMPTY;
+
+	while (current != EMPTY) {
+		temp = linkedlist[current].next;
+		linkedlist[current].next = linkedlist[current].prev;
+		linkedlist[current].prev = temp;
+		*head = current;//hayati önem taşır koymazsan olmaz yeni head değerini böyle alırsın
+		current = temp;
 	}
-	while (last != EMPTY)
-	{
-		printf("%d\t%s\t%d\n", last, linkedlist[last].name, linkedlist[last].next);
-		last = linkedlist[last].prev;
-	} 
+	
 }
+void reverse_recursive(int current,int*head) {
+	if (current == EMPTY) {
+		return;
+	}
+
+	// 'next' ve 'prev' bağlantılarını değiştir
+	int temp = linkedlist[current].next;
+	linkedlist[current].next = linkedlist[current].prev;
+	linkedlist[current].prev = temp;
+	*head = current;
+
+	reverse_recursive(temp, head);
+
+}
+
 int main() {
 	int head = -1;
 	int head2 = -1;
 	empty_list_maker();
 	int sayaç = 0;
-	char list[MAX_LIST][MAX_LIST] = { "al","ag", "ol","vib","bas","an","al","tak"};
-	char list2[MAX_LIST][MAX_LIST] = { "mi","kal", "bel","dai" };
-	
+	char list[MAX_LIST][MAX_LIST] = { "al","ag", "ol","vib","bas","an","alb","tak"};
 	for (int i = 0; i < 8; i++)
 	{
 		insert(list[i], &head);
 	}
-	print_reverse(&head);
 	print(&head);
-	for (int i = 0; i < 4; i++)
-	{
-		insert(list2[i], &head2);
-	}
-	//Delete(list[1],&head);
-	print(&head2);
+	//reverse_iterative(&head);
+	//reverse_recursive(head, &head);
+	Delete(list[2], &head);
+	print(&head);
 }
+
