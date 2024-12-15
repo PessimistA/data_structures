@@ -140,7 +140,7 @@ void insert_to_right(node** head, int item,int n) {
 	else
 	{
 		node* current = *head;
-		for (int i = 0; i < n-2; i++)
+		for (int i = 0; i < n-2; i++)//n-2 bir önceki elemanı n-1 şu anki istedeiğin elemanı göstterir
 		{
 			current = current->next;
 		}
