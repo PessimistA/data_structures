@@ -121,7 +121,7 @@ void infix_to_prefix(char infix[],char prefix[]) {
 			pop();
 		}
 		else if (isOperator(ch)) {
-			while (top != -1 && precedence(stack[top]) >= precedence(ch)) {
+			while (top != -1 && precedence(stack[top]) > precedence(ch)) {//eşitlik prefixte yok
 				prefix[j++] = pop();
 			}
 			push(ch);
