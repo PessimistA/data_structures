@@ -75,7 +75,7 @@ void infixToPrefix(char* infix, char* prefix) {
             pop();  // '(' karakterini pop et
         }
         else if (isOperator(ch)) {
-            while (top != -1 && precedence(stack[top]) >= precedence(ch)) {
+            while (top != -1 && precedence(stack[top]) > precedence(ch)) {//eşitlik postfix de var
                 prefix[j++] = pop();
             }
             push(ch);
