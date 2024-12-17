@@ -57,7 +57,7 @@ int treeLevel(struct node* root) {
 	if (root == NULL) {
 		return 0;
 	}
-	int leftlevel = treeLevel(root->left);
+	int leftlevel = treeLevel(root->left);//en alttakinin height olarak 1 den başlar en üstteki en büyüktür
 	int rightlevel = treeLevel(root->right);
 	if (leftlevel>rightlevel)
 	{
