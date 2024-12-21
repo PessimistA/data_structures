@@ -77,3 +77,46 @@ int main() {
 	print();
 	return 0;
 }
+
+//ver 3
+#include <stdio.h>
+#define MAX_STACK_SIZE 100
+
+int top = -1;
+int stack[MAX_STACK_SIZE];
+
+void push(int item) {
+	if (top >= MAX_STACK_SIZE - 1) {
+		return;
+	}
+	else
+	{
+		stack[++top] = item;
+	}
+}
+int pop()
+{
+	if (top == -1) {
+		return -1; //empty
+	}
+	return stack[top--];
+}
+int Top() {
+	return stack[top];
+}
+void print() {
+	printf("\nstack: ");
+	while(top!=-1)
+	{
+		printf("%d ", pop());
+	}
+}
+
+int main() {
+	push(3);
+	push(4);
+	push(5);
+	push(6);
+	print();
+	return 0;
+}
