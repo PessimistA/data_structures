@@ -42,17 +42,22 @@ void insert(struct list1 linkedlist[], int* head,int item) {
 	if (q==EMPTY)
 	{
 		*head = r;
-		linkedlist[r].prev = -1;
+		linkedlist[r].prev = EMPTY;
 		linkedlist[r].link = p;
 
-		linkedlist[p].prev = r;
+		if (p != EMPTY) {
+			linkedlist[p].prev = r;
+		}
 	}
 	else
 	{
 		linkedlist[q].link = r;
 		linkedlist[r].prev = q;
-		linkedlist[p].prev = r;
 		linkedlist[r].link = p;
+
+		if (p != EMPTY) {
+			linkedlist[p].prev = r;
+		}
 	}
 }
 void insert_wanted_location(struct list1 linkedlist[], int* head, int item,int location) {
@@ -69,11 +74,14 @@ void insert_wanted_location(struct list1 linkedlist[], int* head, int item,int l
 		linkedlist[r].link = *head;//eski head bir sonraki eleman olur
 		*head = r;//yeni head değeri eklenir
 		linkedlist[r].prev = EMPTY;
+		if (*head != EMPTY) {
+			linkedlist[*head].prev = r;
+		}
 	}
 	else
 	{
 		
-		for (int i = 0; i < location-2; i++)//p önceki eleman eklenilecek yerin bir öncesi
+		for (int i = 0; i < location-2 && p != EMPTY; i++)//p önceki eleman eklenilecek yerin bir öncesi
 		{
 			p = linkedlist[p].link;
 		}
@@ -83,14 +91,39 @@ void insert_wanted_location(struct list1 linkedlist[], int* head, int item,int l
 			linkedlist[linkedlist[r].link].prev = r;
 		}
 		linkedlist[p].link = r;
-
 	}
 }
-void reverse_iterative() {
-
+void reverse_iterative(struct list1 linkedlist[],int* head) {
+	int current = *head;
+	int temp = EMPTY;
+	int last = EMPTY;
+	while (current != EMPTY) {
+		last = current;
+		temp = linkedlist[current].prev;
+		linkedlist[current].prev = linkedlist[current].link;
+		linkedlist[current].link = temp;
+		current = linkedlist[current].prev;
+	}
+	*head =last;
+	
 }
-void reverse_recursive() {
+void reverse_recursive(struct list1 linkedlist[], int* head,int current) {
+	if (*head == EMPTY || linkedlist[*head].link == EMPTY) {
+		return;
+	}
 
+	// Mevcut düğümün bağlantılarını ters çevir
+
+	// Sonraki düğüme git (önceki bağlantı artık yeni bağlantıdır)
+	reverse_recursive(linkedlist, &linkedlist[*head].prev , *head);
+
+	int temp = linkedlist[*head].prev;
+	linkedlist[*head].prev = linkedlist[*head].link;
+	linkedlist[*head].link = temp;
+
+	// İşlemin sonunda, yeni baş düğümü güncelle
+
+	*head = temp;
 }
 void return_item(struct list1 linkedlist[], int* head,int p) {
 	linkedlist[p].link = Free;
@@ -131,17 +164,17 @@ void print(struct list1 linkedlist[], int* head) {
 	int current = *head;
 	int last;
 	while (current!= EMPTY){
-		last = current;
+		//last = current;
 		printf("%d %d %d %d", current, linkedlist[current].item, linkedlist[current].link,linkedlist[current].prev);
 		current = linkedlist[current].link;
 		printf("\n");
 	}printf("\n");
-	printf("print reverse\n");
-	while (last != EMPTY) {
-		printf("%d %d %d %d", last, linkedlist[last].item, linkedlist[last].link, linkedlist[last].prev);
-		last = linkedlist[last].prev;
-		printf("\n");
-	}printf("\n");
+	//printf("print reverse\n");
+	//while (last != EMPTY) {
+	//	printf("%d %d %d %d", last, linkedlist[last].item, linkedlist[last].link, linkedlist[last].prev);
+	//	last = linkedlist[last].prev;
+	//	printf("\n");
+	//}printf("\n");
 }
 void print_normal(struct list1 linkedlist[], int* head) {
 	printf("long one\n");
@@ -175,8 +208,10 @@ int main() {
 	print(linkedlist, &head);
 	printf("position index= %d\n",locate(linkedlist,&head,9));
 
-	//insert_wanted_location(linkedlist, &head, 7, 3);
-	//insert_wanted_location(linkedlist, &head, 8, 3);
+	insert_wanted_location(linkedlist, &head, 7, 3);
+	insert_wanted_location(linkedlist, &head, 8, 3);
+	reverse_iterative(linkedlist, &head);
+	//reverse_recursive(linkedlist, &head);
 	print(linkedlist, &head);
 	return 0;
 }
