@@ -200,3 +200,89 @@ int main() {
 
 	return 0;
 }
+
+//stack ve queue
+#define _CRT_SECURE_NO_WARNINGS // Visual Studio kullanýyorsanýz bu satýr gereklidir.
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+struct node {
+	int number;
+	node* next;
+};
+void push(node** head,int item) {
+	struct node* temp = (node*)malloc(sizeof(node));//temp şu anki düğümüm
+	temp->number = item;
+	temp->next = *head;//geriye sarıyormuş gibi düşün sola doğru eklenir ama sola eklediğinin nexti sağı gösterir
+	*head = temp;//yeni head değerini atama
+}
+void pop(node** head) {
+	*head = (*head)->next;
+} 
+void enqueue(node** head, int item) {
+	struct node* temp = (node*)malloc(sizeof(node));//temp şu anki düğümüm
+	temp->number = item;
+	if (*head==NULL)
+	{
+		temp->next = *head;
+		*head = temp;
+	}
+	else
+	{
+		node* current = *head;
+		while (current->next!=NULL) {
+			current = current->next;
+		}
+		temp->next = current->next;
+		current->next = temp;
+	}
+}
+void dequeue(node** head) {
+	node* current = *head;
+	while (current->next->next != NULL) {
+		current = current->next;
+	}
+	current->next= NULL;
+}
+
+void print(node* head) {
+	node* head1 = head;
+	printf("list-stack: ");
+	while (head1 != NULL) {
+		printf("%d  \t", head1->number);
+		head1 = head1->next;
+	}
+	printf("\n");
+}
+
+int main() {
+	node* head = NULL;
+	node* head2 = NULL;
+	push(&head,6);
+	push(&head,7);
+	push(&head, 8);
+	push(&head, 9);
+	push(&head, 1);
+	push(&head, 10);
+	print(head);
+	pop(&head);
+	pop(&head);
+	pop(&head);
+	print(head);
+
+	enqueue(&head2, 1);
+	enqueue(&head2, 2);
+	enqueue(&head2, 3);
+	enqueue(&head2, 4);
+	enqueue(&head2, 5);
+	enqueue(&head2, 6);
+	print(head2);
+	dequeue(&head2);
+	dequeue(&head2);
+	dequeue(&head2);
+	print(head2);
+
+	return 0;
+}
