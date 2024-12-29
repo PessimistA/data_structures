@@ -469,3 +469,84 @@ int main() {
 
 	return 0;
 }
+///
+#define _CRT_SECURE_NO_WARNINGS 
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+struct node {
+	int number;
+	node* next;
+	node* prev;
+};
+node* head = NULL;
+node* tail = NULL;
+node* temp;
+void insert_item(int item) {
+	struct node* temp = (node*)malloc(sizeof(node));
+
+	temp->number = item;
+	temp->next = NULL;
+
+	if (head == NULL)
+	{
+		head = temp;
+		temp->prev = NULL;
+	}
+	else
+	{
+		struct node* current = head;
+		while (current->next != NULL) {
+			current = current->next;
+		}
+		current->next = temp;
+		temp->prev = current;
+		current = temp;
+	}
+}
+
+struct node* reverse_iterative() {
+	struct node* current = head;
+	struct node* temparary = NULL;
+
+	while (current != NULL) {
+		temparary = current->prev;
+		current->prev = current->next;
+		current->next = temparary;
+		current = current->prev;
+	}
+
+	if (current == NULL) {
+		head = temparary->prev;
+	}
+	return head;
+}
+
+void print(struct node** head) {
+	struct node* head2 = *head;
+	printf("list: ");
+	while (head2 != NULL) {
+		printf("%d \t", head2->number);
+		head2 = head2->next;
+	}
+	printf("\n");
+}
+
+int main() {
+	insert_item(6);
+	insert_item(15);
+	insert_item(30);
+	insert_item(40);
+
+	printf("normal list\n");
+	print(&head);
+
+	struct node* head2 = reverse_iterative();//yeni head buradan alınır
+	printf("iterative reverse list\n");
+	print(&head2);
+
+	return 0;
+}
+
