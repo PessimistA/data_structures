@@ -549,4 +549,31 @@ int main() {
 
 	return 0;
 }
+//
+#define MAX 100
+int array[MAX] = { 0,50,30,20,10,5 };//dizinin ilk elemanı 0 atanır ki heap kuralı için 1 den başlar
 
+int the_size = 5;//6. yere ekleyebilmek için
+void insert(int x) {
+    int hole;
+
+    hole = ++the_size;
+    for (; x > array[hole / 2] && hole > 1; hole /= 2) {//max olduğundan > işareti ile yapılır
+        array[hole] = array[hole / 2];
+    }
+    array[hole] = x;
+}
+void printHeap(int the_size, int array[]) {
+    printf("heap: ");
+    for (int i = 1; i <= the_size; i++) {//1 den yazmaya başlamalıyız
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    insert(35);
+    printHeap(the_size, array);
+
+    return 0;
+}
