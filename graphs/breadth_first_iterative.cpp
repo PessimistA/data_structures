@@ -31,9 +31,9 @@ void BFSIterative(int startVertex, int numVertices) {
 
         printf("%d ", currentVertex); // Düğümü yazdır
 
-        for (int i = 0; i < numVertices; i++) {
-            if (adjMatrix[currentVertex][i] == 1 && !visited[i]) {
-                enqueu(i); // Kuyruğa ekle
+        for (int i = 0; i < numVertices; i++) {//maine bakarsan anlam kazanır
+            if (adjMatrix[currentVertex][i] == 1 && !visited[i]) {//1 olma sebebi mainde&& visited olmayan eklenir
+                enqueu(i); //yeni elemanı enqueue et
                 visited[i] = 1;   // Ziyaret edildi olarak işaretle
             }
         }
