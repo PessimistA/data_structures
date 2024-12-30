@@ -469,8 +469,11 @@ int main() {
 
 	return 0;
 }
-///
-#define _CRT_SECURE_NO_WARNINGS 
+
+
+//multiple stack new 
+
+#define _CRT_SECURE_NO_WARNINGS // Visual Studio kullanýyorsanýz bu satýr gereklidir.
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -479,101 +482,61 @@ int main() {
 struct node {
 	int number;
 	node* next;
-	node* prev;
 };
-node* head = NULL;
-node* tail = NULL;
-node* temp;
-void insert_item(int item) {
-	struct node* temp = (node*)malloc(sizeof(node));
 
-	temp->number = item;
-	temp->next = NULL;
+typedef struct {
+	int value;
+};
+typedef struct stack* stack_pointer;
+typedef struct stack {
+	int item;
+	stack* next;
+};
+stack_pointer top[10];
 
-	if (head == NULL)
+void push(stack_pointer* top, int item) {
+	stack* temp = (stack*)malloc(sizeof(stack));
+	temp->item = item;
+	temp->next = *top;
+	*top = temp;
+}
+void pop(stack_pointer* top) {
+	if (*top == NULL)
 	{
-		head = temp;
-		temp->prev = NULL;
+		printf("stack is empty\n");
 	}
-	else
+	*top = (*top)->next;
+}
+void şekilliprint() {
+	for (int i = 0; i < 10; i++)
 	{
-		struct node* current = head;
-		while (current->next != NULL) {
+		stack* current = top[i];
+		printf("list: ");
+		while (current != NULL) {
+			printf("%d -> ", current->item);
 			current = current->next;
 		}
-		current->next = temp;
-		temp->prev = current;
-		current = temp;
+		printf("NULL\n");
 	}
 }
-
-struct node* reverse_iterative() {
-	struct node* current = head;
-	struct node* temparary = NULL;
-
-	while (current != NULL) {
-		temparary = current->prev;
-		current->prev = current->next;
-		current->next = temparary;
-		current = current->prev;
-	}
-
-	if (current == NULL) {
-		head = temparary->prev;
-	}
-	return head;
-}
-
-void print(struct node** head) {
-	struct node* head2 = *head;
+void print(stack_pointer* top) {
+	stack* current = *top;
 	printf("list: ");
-	while (head2 != NULL) {
-		printf("%d \t", head2->number);
-		head2 = head2->next;
+	while (current != NULL) {
+		printf("%d -> ", current->item);
+		current = current->next;
 	}
-	printf("\n");
+	printf("NULL\n");
 }
-
 int main() {
-	insert_item(6);
-	insert_item(15);
-	insert_item(30);
-	insert_item(40);
-
-	printf("normal list\n");
-	print(&head);
-
-	struct node* head2 = reverse_iterative();//yeni head buradan alınır
-	printf("iterative reverse list\n");
-	print(&head2);
-
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			int sayı = rand() % 9 + 1;
+			push(&top[i], sayı);
+		}
+	}
+	şekilliprint();
 	return 0;
-}
-//
-#define MAX 100
-int array[MAX] = { 0,50,30,20,10,5 };//dizinin ilk elemanı 0 atanır ki heap kuralı için 1 den başlar
-
-int the_size = 5;//6. yere ekleyebilmek için
-void insert(int x) {
-    int hole;
-
-    hole = ++the_size;
-    for (; x > array[hole / 2] && hole > 1; hole /= 2) {//max olduğundan > işareti ile yapılır
-        array[hole] = array[hole / 2];
-    }
-    array[hole] = x;
-}
-void printHeap(int the_size, int array[]) {
-    printf("heap: ");
-    for (int i = 1; i <= the_size; i++) {//1 den yazmaya başlamalıyız
-        printf("%d ", array[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    insert(35);
-    printHeap(the_size, array);
-
-    return 0;
 }
