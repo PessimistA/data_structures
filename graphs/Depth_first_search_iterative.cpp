@@ -1,3 +1,4 @@
+//sol taraftan başlıyor
 #define _CRT_SECURE_NO_WARNINGS // Visual Studio kullanýyorsanýz bu satýr gereklidir.
 #include <stdio.h>
 #include <stdlib.h>
@@ -70,7 +71,7 @@ int main() {
 
     return 0;
 }
-//doğru çıkan cevao 
+//sağ taraftan başlayarak yazıyor sola dönüyor
 #define _CRT_SECURE_NO_WARNINGS // Visual Studio kullanýyorsanýz bu satýr gereklidir.
 #include <stdio.h>
 #include <stdlib.h>
