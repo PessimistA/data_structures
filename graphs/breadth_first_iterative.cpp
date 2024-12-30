@@ -12,22 +12,32 @@ int visited[MAX];        // Ziyaret edilen düğümleri tutan dizi
 int queue[MAX];
 int front = 0, rear = -1; // Kuyruk için başlangıç değerleri
 
+void enqueu(int value) {
+    queue[++rear] = value;
+}
+int dequeu() {
+    return queue[front++];
+}
+int isempty() {
+    return front > rear;
+}
+
 // BFS Iterative
 void BFSIterative(int startVertex, int numVertices) {
-    queue[++rear] = startVertex; // Başlangıç düğümünü kuyruğa ekle
-    visited[startVertex] = 1;   // Ziyaret edildi olarak işaretle
+    enqueu(startVertex);
+    visited[startVertex] = 1;
+    while (!isempty()) { // Kuyruk boşalana kadar devam et
+        int currentVertex = dequeu(); // Kuyruktan bir düğüm çıkar
 
-    while (front <= rear) { // Kuyruk boşalana kadar devam et
-        int currentVertex = queue[front++]; // Kuyruktan bir düğüm çıkar
-        printf("%d ", currentVertex);
+        printf("%d ", currentVertex); // Düğümü yazdır
 
-        // Komşuları kuyruğa ekle
         for (int i = 0; i < numVertices; i++) {
             if (adjMatrix[currentVertex][i] == 1 && !visited[i]) {
-                queue[++rear] = i; // Kuyruğa ekle
+                enqueu(i); // Kuyruğa ekle
                 visited[i] = 1;   // Ziyaret edildi olarak işaretle
             }
         }
+        
     }
 }
 
