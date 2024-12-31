@@ -18,7 +18,7 @@ void insert_to_right(node** head, int item) {
 	node* temp = (node*)malloc(sizeof(node));
 	temp->item = item;
 	temp->next = NULL;
-	if (*head == NULL || (*head)->item >= item)
+	if (*head == NULL || (*head)->item >= item)//burada uymayan aranıyor yani head i değiştirmemiz gereken
 	{
 		temp->next = *head;
 		*head = temp;
@@ -27,7 +27,7 @@ void insert_to_right(node** head, int item) {
 	else
 	{
 		node* current = *head;
-		while (current->next != NULL&& current->next->item<item) {
+		while (current->next != NULL&& current->next->item<item) {//burada uyan aranıyor
 			current = current->next;
 		}
 		temp->next = current->next;//temp şu anki elemanım current koyacağım yerin öncesindeki 3 ve 5 düşün 4 ü koyacaksın 3 ün next i 4 ün next i olur sonra da 3. next ine 4 ü atarım
