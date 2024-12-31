@@ -90,6 +90,16 @@ Node* deleteNode(Node* root, int data) {
     }
     return root;
 }
+node* right_most(struct node** root) {
+	if ((*root)->right==NULL)
+	{
+		return *root;
+	}
+	else
+	{
+		right_most(&(*root)->right);
+	}
+}
 int left_most(struct Node** root) {
     if ((*root)->left == NULL)
     {
