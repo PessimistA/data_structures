@@ -108,7 +108,7 @@ void DFSIterative(int startVertex, int numVertices) {
         printf("%d ", currentVertex);
 
         // Komşuları yığına ekle
-        for (int i = 0; i< numVertices; i++) {
+        for (int i = 0; i< numVertices; i++) {//farklı yazılma nedeni burası burası sağa doğru yazıyor diğerinde en büyükten başladığından soldan yazıyor
             if (adjMatrix[currentVertex][i] == 1 && !visited[i]) {
                 push(i);
                 visited[i] = 1;
