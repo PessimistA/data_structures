@@ -64,5 +64,18 @@ int main() {
 	push(&top[7], 2);
 	push(&top[7], 8);
 	print(&top[0]);
-
+	
+	int aranan = 6;
+	int sayaç = 0;
+	for (int i = 0; i <8; i++)
+	{
+		adjacency* current = top[i];
+		while (current!= NULL) {
+			if (aranan ==current->item)
+			{
+				sayaç++;
+			}
+			current = current->next;
+		}
+	}printf("%d kadar tekrar etmiş", sayaç);
 }
