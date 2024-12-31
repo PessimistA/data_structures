@@ -233,6 +233,19 @@ void locate(char searcname[]) {
 		sayaç = linkedlist[sayaç].link;
 	}
 }
+void locate_by_position(char searcname[],int count) {
+	int sayaç = first;//sıralı yazdıracak
+	int say = 0;
+	while (sayaç != EMPTY) {
+		if (say == count)
+		{
+			printf("\nyandaki yerlerde bulunur %d\t%s\t%d\n", say, linkedlist[say].name, linkedlist[say].link);
+			break;
+		}
+		say++;
+		sayaç = linkedlist[sayaç].link;
+	}
+}
 int main() {
 	empty_list_maker();
 	char name[100][100] ={"apple", "orange", "banana", "grape", "kiwi"};
