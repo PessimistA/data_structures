@@ -106,3 +106,92 @@ void mirror(Node* root) {
         }
     }
 }
+
+//linkedlist için dinamik doubly
+struct node* recursive(node* current) {
+	if (current == NULL || current->next == NULL) {
+		return current; // Base case
+	}
+
+	// Recursive çağrı
+	struct node* new_head = recursive(current->next);
+
+	// Bağlantıları ters çevir
+	current->next->next = current;
+	current->prev = current->next;
+	current->next = NULL;
+
+	return new_head;
+}
+struct node* iterative(node** head) {
+	node* current = *head;
+	node* temp = NULL;
+	while (current != NULL) {
+		temp = current->prev;
+		current->prev = current->next;
+		current->next = temp;
+		*head = current;
+		current = current->prev;
+	}
+	return *head;
+}
+//dinamik single reverse
+struct node* reverse_recursive(struct node* head) {
+    // Eğer liste boşsa veya sadece bir eleman varsa, ters çevirmeye gerek yok
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+
+    // Kalan listeyi ters çevir
+    struct node* new_head = reverse_recursive(head->next);
+
+    // Mevcut düğümü ters çevir
+    head->next->next = head;//ters çevirme işlemini burası yapar head değerinin yönünü değiştire değiştire en son head değerini elde ederiz
+    head->next = NULL;
+
+    return new_head; // Yeni baş düğümü döndür
+}
+struct node* reverse_iterative(struct node* head) {
+
+    struct node* prev = NULL; // Bir önceki düğüm
+    struct node* current = head; // Şu anki düğüm
+    struct node* next = NULL; // Sonraki düğüm
+
+    while (current != NULL) {
+        next = current->next;    // Sonraki düğümü sakla
+        current->next = prev;    // Mevcut düğümün yönünü değiştir
+        prev = current;          // Bir sonraki iterasyonda prev, current olur
+        current = next;          // current bir sonraki düğüme geçer
+    }
+
+    return prev; // Yeni baş düğümü döndür
+}
+
+//statik doubly
+void reverse_iterative(int* head) {
+	int current = *head;
+	int temp = EMPTY;
+
+	while (current != EMPTY) {
+		temp = linkedlist[current].next;
+		linkedlist[current].next = linkedlist[current].prev;
+		linkedlist[current].prev = temp;
+		*head = current;//hayati önem taşır koymazsan olmaz yeni head değerini böyle alırsın
+		current = temp;
+	}
+	
+}
+void reverse_recursive(int current,int*head) {
+	if (current == EMPTY) {
+		return;
+	}
+
+	// 'next' ve 'prev' bağlantılarını değiştir
+	int temp = linkedlist[current].next;
+	linkedlist[current].next = linkedlist[current].prev;
+	linkedlist[current].prev = temp;
+	*head = current;
+
+	reverse_recursive(temp, head);
+
+}
