@@ -426,3 +426,102 @@ int main() {
 
     return 0;
 }
+
+//sadece binary atama
+#include <stdio.h>
+#include <stdlib.h>
+
+// Binary tree node structure
+typedef struct Node {
+    int value;
+    struct Node* left;
+    struct Node* right;
+} Node;
+
+// Function to create a new node
+Node* createNode(int value) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->value = value;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+// Insert function for a binary tree
+void insert(Node** root, int value) {
+    Node* newNode = createNode(value);
+    if (*root == NULL) {
+        *root = newNode; // If the tree is empty, make the new node the root
+        return;
+    }
+
+    // Queue for level-order traversal
+    Node* queue[100];
+    int front = 0, rear = 0;
+
+    queue[rear++] = *root;
+
+    while (front < rear) {
+        Node* current = queue[front++];
+
+        // Check the left child
+        if (current->left == NULL) {
+            current->left = newNode;
+            return;
+        } else {
+            queue[rear++] = current->left;
+        }
+
+        // Check the right child
+        if (current->right == NULL) {
+            current->right = newNode;
+            return;
+        } else {
+            queue[rear++] = current->right;
+        }
+    }
+}
+
+// Function to perform level-order traversal
+void levelOrderTraversal(Node* root) {
+    if (root == NULL) {
+        printf("Tree is empty.\n");
+        return;
+    }
+
+    // Queue for level-order traversal
+    Node* queue[100];
+    int front = 0, rear = 0;
+
+    queue[rear++] = root;
+
+    while (front < rear) {
+        Node* current = queue[front++];
+        printf("%d ", current->value);
+
+        if (current->left != NULL) {
+            queue[rear++] = current->left;
+        }
+        if (current->right != NULL) {
+            queue[rear++] = current->right;
+        }
+    }
+    printf("\n");
+}
+
+// Main function
+int main() {
+    Node* root = NULL;
+
+    insert(&root, 10);
+    insert(&root, 20);
+    insert(&root, 30);
+    insert(&root, 40);
+    insert(&root, 50);
+    insert(&root, 60);
+
+    printf("Level-order traversal of the tree:\n");
+    levelOrderTraversal(root);
+
+    return 0;
+}
