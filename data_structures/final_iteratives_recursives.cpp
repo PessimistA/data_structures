@@ -74,6 +74,36 @@ void preorder_iterative(Node* root) {
         }
     }
 }
+void postorder_iterative(Node* root) {
+    if (root == NULL) return;
+
+    Node* stack1[100], * stack2[100]; // İki stack kullanacağız
+    int top1 = -1, top2 = -1;
+
+    // İlk stack'e kök düğümü ekle
+    stack1[++top1] = root;
+
+    while (top1 != -1) {
+        // İlk stack'ten bir düğüm çıkar ve ikinci stack'e ekle
+        Node* current = stack1[top1--];
+        stack2[++top2] = current;
+
+        // Sol alt ağacı ilk stack'e ekle
+        if (current->left != NULL) {
+            stack1[++top1] = current->left;
+        }
+
+        // Sağ alt ağacı ilk stack'e ekle
+        if (current->right != NULL) {
+            stack1[++top1] = current->right;
+        }
+    }
+
+    // İkinci stack'ten düğümleri çıkar ve yazdır
+    while (top2 != -1) {
+        printf("%d ", stack2[top2--]->data);
+    }
+}
 
 //mirror almak reverse almak yani
 void mirror(Node* root) {
