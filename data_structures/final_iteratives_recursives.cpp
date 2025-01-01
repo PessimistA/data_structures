@@ -195,3 +195,27 @@ void reverse_recursive(int current,int*head) {
 	reverse_recursive(temp, head);
 
 }
+//statik single
+void reverseRecursive(int current, int prev) {//prev==0 current==head
+    if (current == EMPTY) {
+        head = prev;  // Başlangıçta head'i en son eleman yap
+        return;
+    }
+
+    int next = linkedList[current].link;  // Bir sonraki elemanı kaydet
+    linkedList[current].link = prev;      // Mevcut elemanın linkini tersine çevir
+    reverseRecursive(next, current);      // Özyineleme ile devam et
+}
+void reverseIterative() {
+    int prev = EMPTY;
+    int current = head;
+    int next;
+
+    while (current != EMPTY) {
+        next = linkedList[current].link;  // Bir sonraki elemanı kaydet
+        linkedList[current].link = prev;  // Mevcut elemanın linkini tersine çevir
+        prev = current;                   // Prev'i güncelle
+        current = next;                   // Current'ı güncelle
+    }
+    head = prev;  // Son eleman, baş eleman olarak atanır
+}
