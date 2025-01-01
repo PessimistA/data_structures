@@ -49,6 +49,31 @@ void inorder_iterative(Node* root) {
         current = current->right;
     }
 }
+void preorder_iterative(Node* root) {
+    Node* stack[100]; // Stack boyutunu ağacın derinliğine göre ayarlayabilirsiniz.
+    int top = -1; // Stack'in başlangıç durumu.
+
+    // Stack'e kök düğümünü ekleyin
+    stack[++top] = root;
+
+    while (top != -1) {
+        // Stack'ten bir düğüm alın
+        Node* current = stack[top--];
+
+        // Mevcut düğümün değerini yazdırın
+        printf("%d ", current->data);
+
+        // Sağ alt ağacı önce ekleyin (çünkü stack LIFO yapısına sahiptir)
+        if (current->right != NULL) {
+            stack[++top] = current->right;
+        }
+
+        // Sol alt ağacı ekleyin
+        if (current->left != NULL) {
+            stack[++top] = current->left;
+        }
+    }
+}
 
 //mirror almak reverse almak yani
 void mirror(Node* root) {
