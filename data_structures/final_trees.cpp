@@ -289,7 +289,51 @@ void mirror(Node* root) {
         }
     }
 }
+void depth_calculate(Node* root, int sayı, int depth, int* result) {
+    // Eğer kök NULL ise, sayı bulunamaz, fonksiyondan çık
+    if (root == NULL) {
+        return;
+    }
 
+    // Sayı bulunduğunda, sonucu güncelle ve çık
+    if (sayı == root->data) {
+        *result = depth;
+        return;
+    }
+
+    // Sayı, kök değerinden küçükse, sol alt ağaca git
+    if (sayı < root->data) {
+        depth_calculate(root->left, sayı, depth + 1, result);
+    }
+    // Sayı, kök değerinden büyükse, sağ alt ağaca git
+    else {
+        depth_calculate(root->right, sayı, depth + 1, result);
+    }
+}
+int height_root(Node* root, int sayı) {
+    // Eğer ağaç boşsa, yükseklik -1 olarak kabul edilir
+    if (root == NULL) {
+        return -1;  // Alternatif olarak 0 döndürülebilir, ancak genellikle -1 kullanılır
+    } {
+        int leftHeight = height_root(root->left, sayı);
+        int rightHeight = height_root(root->right, sayı);
+
+        // En büyük yükseklik + 1 (node kendisi de sayılır)
+        return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+
+    }
+}
+int height(Node* root) {
+    if (root==NULL)
+    {
+        return -1;
+    }
+    int leftHeight = height(root->left);
+    int rightHeight = height(root->right);
+
+    // En büyük yükseklik + 1 (node kendisi de sayılır)
+    return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+}
 
 int main() {
     Node* root = NULL;
@@ -366,9 +410,19 @@ int main() {
     Node* found = binary_search(root, 75);
     printf("\nbulunan eleman %d\n", found->data);
 
+    int depth = 0;
+    depth_calculate(root2, 6,0, &depth);
+    printf("\n%d depth vardır\n", depth);
+    Node* bulunan = findroot(root2, 8);
+    printf("\n%d rootu vardır\n", bulunan->data);
+    int line = height_root(bulunan, 7);//bulduğun datayı root olarak atarsan aşağısında kalan tüm nodeları sayar ve height bulunur
+    printf("\n%d height vardır\n", line);
+	
     //printf("40 sayısının yerini döndüren\n");
     //Node* position = search(40, root);
     //printf("%d", position);
+	
+	
 
     return 0;
 }
